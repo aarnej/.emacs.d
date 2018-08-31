@@ -1,5 +1,5 @@
 ;; GNU Emacs 26.1 (build 2, x86_64-pc-linux-gnu, GTK+ Version 3.18.9)
- of 2018-05-29
+;; of 2018-05-29
 
 (require 'package) ;; You might already have this line
 (add-to-list 'package-archives
