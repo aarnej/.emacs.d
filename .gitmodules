@@ -1,0 +1,6 @@
+[submodule "lisp/magit-gerrit"]
+	path = lisp/magit-gerrit
+	url = https://github.com/aarnej/magit-gerrit.git
+[submodule "lisp/robot-mode"]
+	path = lisp/robot-mode
+	url = https://github.com/aarnej/robot-mode.git
