@@ -18,6 +18,29 @@
 	   (setq current-prefix-arg '(4)) ; C-u
 	   (call-interactively 'ag))))
 
+;; (use-package frame-fns
+;;   :load-path "lisp/emacswiki.org")
+;;
+;; (use-package frame-cmds
+;;   :load-path "lisp/emacswiki.org")
+
+;; (use-package doremi-frm
+;;   :load-path "lisp/emacswiki.org"
+;;   :config
+;;   (defalias 'doremi-prefix (make-sparse-keymap))
+;;   (defvar doremi-map (symbol-function 'doremi-prefix)
+;;     "Keymap for Do Re Mi commands.")
+;;   (define-key global-map "\C-xt" 'doremi-prefix)
+;;   (define-key doremi-map "a" 'doremi-all-faces-fg+)    ; "All"
+;;   (define-key doremi-map "c" 'doremi-bg+)              ; "Color"
+;;   (define-key doremi-map "f" 'doremi-face-fg+)         ; Face"
+;;   (define-key doremi-map "h" 'doremi-frame-height+)
+;;   (define-key doremi-map "t" 'doremi-font+)            ; "Typeface"
+;;   (define-key doremi-map "u" 'doremi-frame-configs+)   ; "Undo"
+;;   (define-key doremi-map "x" 'doremi-frame-horizontally+)
+;;   (define-key doremi-map "y" 'doremi-frame-vertically+)
+;;   (define-key doremi-map "z" 'doremi-font-size+))      ; "Zoom"
+
 (use-package browse-kill-ring
   :ensure t
   :config
