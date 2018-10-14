@@ -4,3 +4,6 @@
 [submodule "lisp/robot-mode"]
 	path = lisp/robot-mode
 	url = https://github.com/aarnej/robot-mode.git
+[submodule "lisp/emacswiki.org"]
+	path = lisp/emacswiki.org
+	url = https://github.com/aarnej/emacswiki.org
