@@ -11,6 +11,7 @@
  '(elpy-rpc-backend "jedi")
  '(elpy-shell-echo-input-cont-prompt nil)
  '(fill-column 79)
+ '(ggtags-executable-directory "c:\\msys64\\mingw64\\bin")
  '(git-commit-fill-column 70)
  '(global-whitespace-mode t)
  '(indent-tabs-mode nil)

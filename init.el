@@ -18,6 +18,14 @@
 	   (setq current-prefix-arg '(4)) ; C-u
 	   (call-interactively 'ag))))
 
+(use-package ggtags
+  :ensure t
+  :config
+  (add-hook 'c-mode-common-hook
+          (lambda ()
+            (when (derived-mode-p 'c-mode 'c++-mode)
+              (ggtags-mode 1)))))
+
 ;; (use-package frame-fns
 ;;   :load-path "lisp/emacswiki.org")
 ;;
