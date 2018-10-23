@@ -73,13 +73,9 @@
   (ido-vertical-mode))
 
 (use-package magit
-  :ensure t
-  :bind (("C-x v l" . magit-log-buffer-file)))
-
-(use-package magit-gerrit
-  :load-path "lisp/magit-gerrit"
-  :config
-  (setq-default magit-gerrit-ssh-creds ""))
+  :load-path "lisp/magit/lisp"
+  :bind (("C-x v l" . magit-log-buffer-file)
+         ("C-x g" . magit-status)))
 
 (use-package projectile
   :ensure t
@@ -114,6 +110,8 @@
 (global-set-key (kbd "C-c <up>")    'windmove-up)
 (global-set-key (kbd "C-c <down>")  'windmove-down)
 
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
 ;; to get CTRL + arrow keys working
 ;;(define-key input-decode-map "\e[1;3A" [C-up])
 ;;(define-key input-decode-map "\e[1;5A" [C-up])
@@ -144,3 +142,5 @@
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
+(put 'magit-clean 'disabled nil)
+
