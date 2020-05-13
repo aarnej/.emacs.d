@@ -6,4 +6,22 @@
 	url = https://github.com/aarnej/robot-mode.git
 [submodule "lisp/magit"]
 	path = lisp/magit
-	url = https://github.com/magit/magit.git
+	url = https://github.com/aarnej/magit.git
+[submodule "lisp/icicles"]
+	path = lisp/icicles
+	url = https://github.com/aarnej/icicles.git
+[submodule "lisp/frame-cmds"]
+	path = lisp/frame-cmds
+	url = https://github.com/emacsmirror/frame-cmds.git
+[submodule "lisp/frame-fns"]
+	path = lisp/frame-fns
+	url = https://github.com/emacsmirror/frame-fns.git
+[submodule "lisp/Emacs-wgrep"]
+	path = lisp/Emacs-wgrep
+	url = https://github.com/mhayashi1120/Emacs-wgrep
+[submodule "lisp/deadgrep"]
+	path = lisp/deadgrep
+	url = https://github.com/aarnej/deadgrep.git
+[submodule "lisp/spinner"]
+	path = lisp/spinner
+	url = https://github.com/Malabarba/spinner.el.git

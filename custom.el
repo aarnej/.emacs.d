@@ -4,9 +4,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(Buffer-menu-name-width 60)
- '(ag-arguments (quote ("--smart-case" "--stats" "--width=100")))
- '(ag-highlight-search t)
+ ;; '(ag-arguments (quote ("--smart-case" "--stats" "--width=100")))
+ ;; '(ag-highlight-search t)
+ ;; '(ag-ignore-list (quote ("node_modules/" "graphql/dist/")))
+ ;; '(ag-reuse-window t)
  '(auto-save-default nil)
+ '(before-save-hook (quote (whitespace-cleanup)))
  '(column-number-mode t)
  '(confirm-nonexistent-file-or-buffer t)
  '(css-indent-offset 2)
@@ -16,8 +19,11 @@
  '(elpy-rpc-backend "jedi")
  '(elpy-shell-echo-input-cont-prompt nil)
  '(fill-column 79)
+ '(flx-ido-threshold 500)
+ '(flycheck-check-syntax-automatically (quote (save mode-enabled)))
  '(flycheck-shellcheck-follow-sources nil)
  '(git-commit-fill-column 70)
+ '(global-display-line-numbers-mode t)
  '(global-whitespace-mode t)
  '(ibuffer-elide-long-columns nil)
  '(ibuffer-formats
@@ -30,7 +36,7 @@
            " " filename))))
  '(indent-tabs-mode nil)
  '(js-indent-level 2)
- '(kill-ring-max 1000)
+ '(kill-ring-max 100)
  '(magit-diff-refine-hunk (quote all))
  '(magit-fetch-arguments (quote ("--tags")))
  '(magit-gerrit-push-review-to-topic nil)
@@ -44,6 +50,7 @@
    (quote
     (magit-insert-error-header magit-insert-branch-description magit-insert-local-branches magit-insert-remote-branches)))
  '(make-backup-files nil)
+ '(markdown-asymmetric-header t)
  '(mode-line-format
    (quote
     ("" mode-line-client mode-line-modified mode-line-frame-identification
@@ -54,7 +61,7 @@
  '(mode-require-final-newline nil)
  '(package-selected-packages
    (quote
-    (transient request rjsx-mode flycheck dired-filter python-docstring json-mode yaml-mode xterm-color xcscope use-package undo-tree projectile popup js2-mode ido-vertical-mode helm-core flx-ido fiplr browse-kill-ring ag adoc-mode)))
+    (eslint-fix elpy prettier tide markdown-mode web-mode typescript-mode transient request rjsx-mode flycheck dired-filter python-docstring json-mode yaml-mode xterm-color xcscope use-package undo-tree projectile popup js2-mode ido-vertical-mode helm-core flx-ido fiplr browse-kill-ring adoc-mode)))
  '(projectile-mode-line
    (quote
     (:eval
@@ -62,22 +69,27 @@
              (projectile-project-name)))))
  '(python-docstring-sentence-end-double-space nil)
  '(python-fill-docstring-style (quote django))
- '(python-shell-interpreter "python3")
+ '(python-shell-interpreter "python3.6")
  '(recentf-max-saved-items 1000)
  '(recentf-mode t)
  '(request-curl-options (quote ("--netrc")))
  '(require-final-newline nil)
+ '(search-whitespace-regexp "[ 	
+]+")
  '(show-paren-mode t)
  '(show-paren-style (quote mixed))
+ '(split-height-threshold nil)
  '(tab-width 4)
  '(tar-mode-show-date t)
  '(truncate-partial-width-windows nil)
  '(undo-tree-mode-lighter " Undo-T")
  '(vc-display-status nil)
- '(which-function-mode t)
+ '(web-mode-code-indent-offset 2)
+ '(web-mode-css-indent-offset 2)
+ '(web-mode-markup-indent-offset 2)
  '(whitespace-global-modes (quote (python-mode)))
  '(whitespace-line-column 79)
- '(whitespace-style (quote (face trailing lines-tail tab-mark)))
+ '(whitespace-style (quote (face trailing tab-mark)))
  '(yaml-block-literal-electric-alist (quote ((124 . "") (62 . "")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -87,6 +99,9 @@
  '(flymake-error ((t (:inherit error :background "color-225" :foreground "brightred"))))
  '(git-rebase-hash ((t (:foreground "gre"))))
  '(highlight-indentation-face ((t (:inherit ##))))
+ '(line-number ((t (:foreground "color-240"))))
+ '(linum ((t (:inherit (shadow default) :foreground "color-241"))))
+ '(markdown-header-face-3 ((t (:inherit markdown-header-face :foreground "color-39" :weight light :height 1.0))))
  '(markup-code-face ((t (:inherit (fixed-pitch markup-gen-face) :foreground "color-105"))))
  '(markup-title-0-face ((t (:inherit markup-gen-face :weight bold :height 3.0))))
  '(markup-title-1-face ((t (:inherit markup-gen-face :weight bold :height 2.4))))
