@@ -1,12 +1,22 @@
-;; GNU Emacs 26.1
+;; GNU Emacs 26
 
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(package-initialize)
-(require 'use-package)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+	(url-retrieve-synchronously
+	 "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+	 'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+
+(straight-use-package 'use-package)
 
 (use-package adoc-mode
-  :ensure t
+  :straight t
   :bind (:map adoc-mode-map ("C-c C-t" . adoc-adjust-title-del))
   :mode (("\\.adoc\\'" . adoc-mode))
   :config
@@ -15,7 +25,7 @@
             (electric-indent-local-mode 0))))
 
 (use-package xterm-color
-  :ensure t
+  :straight t
   :config
   (setq comint-output-filter-functions
         (remove 'ansi-color-process-output comint-output-filter-functions))
@@ -26,15 +36,15 @@
                'xterm-color-filter nil t))))
 
 (use-package spinner
-  :load-path "lisp/spinner")
+  :straight t)
 
 (use-package deadgrep
   :requires spinner
-  :load-path "lisp/deadgrep"
+  :straight (deadgrep :type git :host github :repo "aarnej/deadgrep")
   :bind (("\C-cg" . deadgrep)))
 
 ;; (use-package ag
-;;   :ensure t
+;;   :straight t
 ;;   :bind (("\C-c \S-g" .
 ;; 	      (lambda () (interactive)
 ;; 	        (setq current-prefix-arg '(4)) ; C-u
@@ -50,16 +60,16 @@
 ;; (add-hook 'ag-mode-hook 'wgrep-ag-setup)
 
 (use-package wgrep
-  :load-path "lisp/Emacs-wgrep")
+  :straight t)
 
 ;; (use-package wgrep-ag
-;;   :load-path "lisp/Emacs-wgrep")
+;;   :straight t)
 
 (use-package dired-filter
-  :ensure t)
+  :straight t)
 
 (use-package flycheck
-  :ensure t
+  :straight t
   :config
   (setq-default flycheck-disabled-checkers
                 (append flycheck-disabled-checkers
@@ -84,23 +94,23 @@
 
 
 (use-package rjsx-mode
-  :ensure t
+  :straight t
   :mode "\\.js\\'")
 
 (use-package js2-mode
-  :ensure t
+  :straight t
   ;;:mode "\\.js\\'"
 )
 
 (use-package tide
-  :ensure t
+  :straight t
   :after (typescript-mode company flycheck)
   :hook ((typescript-mode . tide-setup)
          (typescript-mode . tide-hl-identifier-mode))
   )
 
 (use-package web-mode
-  :ensure t
+  :straight t
   :mode "\\.tsx\\'" "\\.ts\\'" "\\.js\\'"
   :config
   (defun setup-tide-mode ()
@@ -127,18 +137,23 @@
                 (setup-tide-mode))))
   )
 
-(use-package prettier
-  :ensure t
-  :after (web-mode)
-  :config
-  (defun my-prettier-before-save-hook ()
-    (when (member major-mode '(rjsx-mode web-mode))
-      (prettier-prettify)))
+(use-package nvm
+  :straight t)
 
-  (add-hook 'before-save-hook #'my-prettier-before-save-hook))
+(use-package iter2
+  :straight t)
+
+;; (use-package prettier.el
+;;   :straight (prettier.el :type git :host github :repo "jscheid/prettier.el")
+;;   :after (web-mode)
+;;   :config
+;;   (defun my-prettier-before-save-hook ()
+;;     (when (member major-mode '(rjsx-mode web-mode))
+;;       (prettier-prettify)))
+;;   (add-hook 'before-save-hook #'my-prettier-before-save-hook))
 
 (use-package markdown-mode
-  :ensure t
+  :straight t
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
@@ -152,33 +167,38 @@
   )
 
 (use-package browse-kill-ring
-  :ensure t
+  :straight t
   :config
   (browse-kill-ring-default-keybindings))
 
 (use-package yaml-mode
-  :ensure t)
+  :straight t)
 
 (use-package python-docstring
-  :ensure t
+  :straight t
   :config
   (python-docstring-install))
 
 (use-package json-mode
-  :ensure t)
+  :straight t)
+
+;; (use-package pyenv-mode
+;;   :straight t
+;;   :config
+;;   (pyenv-mode))
 
 (use-package elpy
-  :ensure t
+  :straight t
   :config
   (elpy-enable))
 
 (use-package flx-ido
-  :ensure t
+  :straight t
   :config
   (flx-ido-mode 1))
 
 (use-package ido
-  :ensure t
+  :straight t
   :config
   (ido-mode 1)
   ;;(defvar ido-enable-replace-completing-read t
@@ -209,27 +229,27 @@
 )
 
 (use-package ido-vertical-mode
-  :ensure t
+  :straight t
   :config
   (ido-vertical-mode))
 
 (use-package request
-  :ensure t
+  :straight t
   )
 
 (use-package frame-fns
-  :load-path "lisp/frame-fns")
+  :straight t)
 
 (use-package frame-cmds
-  :load-path "lisp/frame-cmds"
+  :straight t
   :bind (("C-x 5 r" . rename-frame)))
 
 (use-package icicles
-  :load-path "lisp/icicles"
+  :straight  (icicles :type git :host github :repo "aarnej/icicles")
   :bind (("C-x 5 o" . icicle-select-frame)))
 
 (use-package magit
-  :load-path "lisp/magit/lisp"
+  :straight (magit :type git :host github :repo "aarnej/magit")
   :commands (magit-status)
   :bind (("C-x v l" . magit-log-buffer-file)
          ("C-x v =" . magit-diff-buffer-file)
@@ -305,13 +325,13 @@
                           nil t)
   )
 
-(use-package magit-gerrit
-  :load-path "lisp/magit-gerrit"
-  :config
-  (setq-default magit-gerrit-ssh-creds ""))
+;; (use-package magit-gerrit
+;;   :straight t
+;;   :config
+;;   (setq-default magit-gerrit-ssh-creds ""))
 
 (use-package projectile
-  :ensure t
+  :straight t
   :bind ("C-x f" . projectile-find-file)
   :bind-keymap
   ("C-c p" . projectile-command-map)
@@ -319,48 +339,53 @@
   (projectile-mode +1))
 
 (use-package recentf
-    :ensure t)
+    :straight t)
 
-(use-package robot-mode
-  :load-path "lisp/robot-mode"
-  :mode "\\.robot\\'")
+;; (use-package robot-mode
+;;   :straight t
+;;   :mode "\\.robot\\'")
 
 (use-package undo-tree
-  :ensure t
+  :straight t
   :config
   (global-undo-tree-mode))
 
 (use-package whitespace
-  :ensure t
+  :straight t
   :config
   (add-hook 'before-save-hook 'whitespace-cleanup)
   (add-hook 'makefile-gmake-mode-hook #'whitespace-mode)
   )
 
 (use-package eslint-fix
-  :ensure t)
+  :straight t)
 
-;;(global-unset-key "\C-x\C-c")
+;;;;;;;;;;;;;;;;;;
+;; Key mapping
 
-(global-set-key (kbd "C-c <left>")  'windmove-left)
-(global-set-key (kbd "C-c <right>") 'windmove-right)
-(global-set-key (kbd "C-c <up>")    'windmove-up)
-(global-set-key (kbd "C-c <down>")  'windmove-down)
+(defvar my-keys-minor-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c <left>")  'windmove-left)
+    (define-key map (kbd "C-c <right>") 'windmove-right)
+    (define-key map (kbd "C-c <up>")    'windmove-up)
+    (define-key map (kbd "C-c <down>")  'windmove-down)
+    (define-key map (kbd "C-x C-b") 'ibuffer)
+    map)
+  "Keymap for my-keys-minor-mode.")
+
+(define-minor-mode my-keys-minor-mode
+  "A minor mode so that my key settings override annoying major modes."
+  :init-value t
+  :lighter " my-keys")
+
+(my-keys-minor-mode 1)
+
+;; (global-set-key (kbd "C-c <left>")  'windmove-left)
+;; (global-set-key (kbd "C-c <right>") 'windmove-right)
+;; (global-set-key (kbd "C-c <up>")    'windmove-up)
+;; (global-set-key (kbd "C-c <down>")  'windmove-down)
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-
-;; to get CTRL + arrow keys working
-;;(define-key input-decode-map "\e[1;3A" [C-up])
-;;(define-key input-decode-map "\e[1;5A" [C-up])
-;;
-;;(define-key input-decode-map "\e[1;3B" [C-down])
-;;(define-key input-decode-map "\e[1;5B" [C-down])
-;;
-;;(define-key input-decode-map "\e[1;3C" [C-right])
-;;(define-key input-decode-map "\e[1;5C" [C-right])
-;;
-;;(define-key input-decode-map "\e[1;3D" [C-left])
-;;(define-key input-decode-map "\e[1;5D" [C-left])
 
 (define-key input-decode-map "\e[A" [C-up])
 (define-key input-decode-map "\e[B" [C-down])
@@ -368,6 +393,11 @@
 (define-key input-decode-map "\e[D" [C-left])
 
 (define-key dired-mode-map "Q" 'dired-do-query-replace-regexp)
+
+;;;;;;;;;;;
+;; Customize Emacs built-in stuff
+
+(menu-bar-mode 0)
 
 (add-hook 'emacs-lisp-mode-hook
 	  (lambda ()

@@ -4,10 +4,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(Buffer-menu-name-width 60)
- ;; '(ag-arguments (quote ("--smart-case" "--stats" "--width=100")))
- ;; '(ag-highlight-search t)
- ;; '(ag-ignore-list (quote ("node_modules/" "graphql/dist/")))
- ;; '(ag-reuse-window t)
  '(auto-save-default nil)
  '(before-save-hook (quote (whitespace-cleanup)))
  '(column-number-mode t)
@@ -51,13 +47,6 @@
     (magit-insert-error-header magit-insert-branch-description magit-insert-local-branches magit-insert-remote-branches)))
  '(make-backup-files nil)
  '(markdown-asymmetric-header t)
- '(mode-line-format
-   (quote
-    ("" mode-line-client mode-line-modified mode-line-frame-identification
-     (:eval
-      (format "[%s]"
-              (projectile-project-name)))
-     " " mode-line-buffer-identification mode-line-misc-info mode-line-position mode-line-remote mode-line-end-spaces)))
  '(mode-require-final-newline nil)
  '(package-selected-packages
    (quote
@@ -74,7 +63,7 @@
  '(recentf-mode t)
  '(request-curl-options (quote ("--netrc")))
  '(require-final-newline nil)
- '(search-whitespace-regexp "[ 	
+ '(search-whitespace-regexp "[
 ]+")
  '(show-paren-mode t)
  '(show-paren-style (quote mixed))
