@@ -1,7 +1,9 @@
 *~
 recentf*
 auto-save-list/
-elpa/
+elpy/
+straight/
+transient/
 server/
 projectile-bookmarks.eld
 ido.last

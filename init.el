@@ -134,6 +134,32 @@
   (add-hook 'web-mode-hook
             (lambda ()
               (when (member (file-name-extension buffer-file-name) '("tsx" "ts"))
+                ;; To make comment filling work, copied these lines from
+                ;; typescript-mode.el
+                (setq c-comment-prefix-regexp "//+\\|\\**"
+                      c-paragraph-start "$"
+                      c-paragraph-separate "$"
+                      c-block-comment-prefix "* "
+                      c-line-comment-starter "//"
+                      c-comment-start-regexp "/[*/]\\|\\s!"
+                      comment-start-skip "\\(//+\\|/\\*+\\)\\s *")
+
+                (setq-local electric-indent-chars
+                            (append "{}():;," electric-indent-chars))
+                (setq-local electric-layout-rules
+                            '((?\; . after) (?\{ . after) (?\} . before)))
+
+                (let ((c-buffer-is-cc-mode t))
+                  ;; FIXME: These are normally set by `c-basic-common-init'.  Should
+                  ;; we call it instead?  (Bug#6071)
+                  (make-local-variable 'paragraph-start)
+                  (make-local-variable 'paragraph-separate)
+                  (make-local-variable 'paragraph-ignore-fill-prefix)
+                  (make-local-variable 'adaptive-fill-mode)
+                  (make-local-variable 'adaptive-fill-regexp)
+                  (c-setup-paragraph-variables))
+
+                (setq fill-paragraph-function 'c-fill-paragraph)
                 (setup-tide-mode))))
   )
 
@@ -143,14 +169,14 @@
 (use-package iter2
   :straight t)
 
-;; (use-package prettier.el
-;;   :straight (prettier.el :type git :host github :repo "jscheid/prettier.el")
-;;   :after (web-mode)
-;;   :config
-;;   (defun my-prettier-before-save-hook ()
-;;     (when (member major-mode '(rjsx-mode web-mode))
-;;       (prettier-prettify)))
-;;   (add-hook 'before-save-hook #'my-prettier-before-save-hook))
+(use-package prettier
+  :straight (prettier :type git :host github :repo "jscheid/prettier.el")
+  :after (web-mode)
+  :config
+  (defun my-prettier-before-save-hook ()
+    (when (member major-mode '(rjsx-mode web-mode typescript-mode))
+      (prettier-prettify)))
+  (add-hook 'before-save-hook #'my-prettier-before-save-hook))
 
 (use-package markdown-mode
   :straight t

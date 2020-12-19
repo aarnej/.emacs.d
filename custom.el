@@ -63,8 +63,6 @@
  '(recentf-mode t)
  '(request-curl-options (quote ("--netrc")))
  '(require-final-newline nil)
- '(search-whitespace-regexp "[
-]+")
  '(show-paren-mode t)
  '(show-paren-style (quote mixed))
  '(split-height-threshold nil)
@@ -74,6 +72,12 @@
  '(undo-tree-mode-lighter " Undo-T")
  '(vc-display-status nil)
  '(web-mode-code-indent-offset 2)
+ '(web-mode-comment-formats
+   (quote
+    (("javascript" . "//")
+     ("jsx" . "//")
+     ("tsx" . "//")
+     ("typescript" . "//"))))
  '(web-mode-css-indent-offset 2)
  '(web-mode-markup-indent-offset 2)
  '(whitespace-global-modes (quote (python-mode)))
