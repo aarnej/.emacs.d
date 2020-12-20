@@ -58,7 +58,6 @@
              (projectile-project-name)))))
  '(python-docstring-sentence-end-double-space nil)
  '(python-fill-docstring-style (quote django))
- '(python-shell-interpreter "python3.6")
  '(recentf-max-saved-items 1000)
  '(recentf-mode t)
  '(request-curl-options (quote ("--netrc")))

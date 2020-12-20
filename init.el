@@ -38,6 +38,11 @@
 (use-package spinner
   :straight t)
 
+(use-package pyenv-mode
+  :straight t
+  :config
+  (pyenv-mode))
+
 (use-package deadgrep
   :requires spinner
   :straight (deadgrep :type git :host github :repo "aarnej/deadgrep")
@@ -169,14 +174,14 @@
 (use-package iter2
   :straight t)
 
-(use-package prettier
-  :straight (prettier :type git :host github :repo "jscheid/prettier.el")
-  :after (web-mode)
-  :config
-  (defun my-prettier-before-save-hook ()
-    (when (member major-mode '(rjsx-mode web-mode typescript-mode))
-      (prettier-prettify)))
-  (add-hook 'before-save-hook #'my-prettier-before-save-hook))
+;; (use-package prettier
+;;   :straight (prettier :type git :host github :repo "jscheid/prettier.el")
+;;   :after (web-mode)
+;;   :config
+;;   (defun my-prettier-before-save-hook ()
+;;     (when (member major-mode '(rjsx-mode web-mode typescript-mode))
+;;       (prettier-prettify)))
+;;   (add-hook 'before-save-hook #'my-prettier-before-save-hook))
 
 (use-package markdown-mode
   :straight t
