@@ -93,7 +93,7 @@
 
   (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 
-  (defvaralias 'flycheck-python-flake8-executable 'python-shell-interpreter)
+  ;; (defvaralias 'flycheck-python-flake8-executable 'python-shell-interpreter)
   )
 
 
@@ -259,6 +259,9 @@
   ;;        ad-do-it)))))
 )
 
+(use-package diminish
+  :straight t)
+
 (use-package ido-vertical-mode
   :straight t
   :config
@@ -363,11 +366,13 @@
 
 (use-package projectile
   :straight t
+  :after (diminish)
   :bind ("C-x f" . projectile-find-file)
   :bind-keymap
   ("C-c p" . projectile-command-map)
   :config
-  (projectile-mode +1))
+  (projectile-mode +1)
+  (diminish 'projectile-mode))
 
 (use-package recentf
     :straight t)
@@ -378,14 +383,18 @@
 
 (use-package undo-tree
   :straight t
+  :after (diminish)
   :config
-  (global-undo-tree-mode))
+  (global-undo-tree-mode)
+  (diminish 'undo-tree-mode))
 
 (use-package whitespace
   :straight t
+  :after (diminish)
   :config
   (add-hook 'before-save-hook 'whitespace-cleanup)
   (add-hook 'makefile-gmake-mode-hook #'whitespace-mode)
+  (diminish 'global-whitespace-mode)
   )
 
 (use-package eslint-fix
@@ -406,8 +415,7 @@
 
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
-  :init-value t
-  :lighter " my-keys")
+  :init-value t)
 
 (my-keys-minor-mode 1)
 
@@ -442,3 +450,5 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 (put 'magit-clean 'disabled nil)
+
+(diminish 'auto-revert-mode)
