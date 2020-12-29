@@ -8,6 +8,7 @@
  '(before-save-hook '(whitespace-cleanup))
  '(column-number-mode t)
  '(confirm-nonexistent-file-or-buffer t)
+ '(create-lockfiles nil)
  '(css-indent-offset 2)
  '(custom-enabled-themes '(tango-dark))
  '(elpy-modules
@@ -17,6 +18,7 @@
  '(fill-column 79)
  '(flx-ido-threshold 500)
  '(flycheck-check-syntax-automatically '(save mode-enabled))
+ '(flycheck-flake8rc ".flake8")
  '(flycheck-shellcheck-follow-sources nil)
  '(git-commit-fill-column 70)
  '(global-display-line-numbers-mode t)
@@ -57,6 +59,7 @@
  '(recentf-mode t)
  '(request-curl-options '("--netrc"))
  '(require-final-newline nil)
+ '(safe-local-variable-values '((git-commit-major-mode . git-commit-elisp-text-mode)))
  '(show-paren-mode t)
  '(show-paren-style 'mixed)
  '(split-height-threshold nil)

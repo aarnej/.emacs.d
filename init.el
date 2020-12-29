@@ -92,8 +92,8 @@
         (setq-local flycheck-javascript-eslint-executable eslint))))
 
   (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
-
   ;; (defvaralias 'flycheck-python-flake8-executable 'python-shell-interpreter)
+  ;; (defvar flycheck-python-flake8-executable "/home/aarne/.pyenv/shims/python")
   )
 
 
@@ -127,6 +127,7 @@
     (tide-hl-identifier-mode +1)
     (company-mode +1)
     (setq-default web-mode-comment-formats '(("javascript" . "//")
+                                             ("typescript" . "//")
                                              ("jsx" . "//")
                                              ("tsx" . "//")))
     )
@@ -213,10 +214,32 @@
 (use-package json-mode
   :straight t)
 
-;; (use-package pyenv-mode
-;;   :straight t
-;;   :config
-;;   (pyenv-mode))
+(use-package paredit
+  :straight t
+  :config
+  (add-hook 'python-mode-hook #'enable-paredit-mode)
+  (add-hook 'web-mode-hook #'enable-paredit-mode)
+  (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
+
+(use-package pyenv-mode
+  :straight t
+  :after (pyvenv-mode)
+  :config
+  (defun ssbb-pyenv-hook ()
+    "Automatically activates pyenv version if .python-version file exists."
+    (f-traverse-upwards
+     (lambda (path)
+       (let ((pyenv-version-path (f-expand ".python-version" path)))
+         (when (f-exists? pyenv-version-path)
+           (let ((version (s-trim (f-read-text pyenv-version-path 'utf-8))))
+             (pyenv-mode-set version)
+             (setq-local pyvenv-activate (pyenv-mode-full-path version)
+             )
+           ))))))
+
+  (add-hook 'python-mode-hook 'ssbb-pyenv-hook)
+  (pyvenv-tracking-mode)
+  (pyenv-mode))
 
 (use-package elpy
   :straight t
@@ -289,67 +312,69 @@
          ("C-x v =" . magit-diff-buffer-file)
          ("C-x g" . magit-status))
   :config
-  (magit-define-popup-switch 'magit-fetch-popup
-      ?t "Fetch all tags" "--tags")
+  ;; (magit-define-popup-switch 'magit-fetch-popup
+  ;;     ?t "Fetch all tags" "--tags")
+  (transient-append-suffix 'magit-fetch "-p"
+    '("-t" "Fetch all tags" "--tags"))
 
-  (defface magit-aarne-review-name
-    '((((class color) (background light)) :foreground "cyan")
-      (((class color) (background  dark)) :foreground "cyan"))
-    "Face for review name.")
-
-  (defface magit-aarne-review-status
-    '((((class color) (background light)) :foreground "brightmagenta")
-      (((class color) (background  dark)) :foreground "brightmagenta"))
-    "Face for review status.")
-
-  (defface magit-aarne-review-commit-status
-    '((((class color) (background light)) :foreground "yellow")
-      (((class color) (background  dark)) :foreground "yellow"))
-    "Face for review status.")
-
-  (defun* magit-insert-aarne-gerrit-reviews ()
-    (let* ((logs (magit-git-lines "log" "@{upstream}.."))
-           (commits (--filter (string-match "Change-Id" it) logs))
-           (change-ids (or
-                        (--map (substring it 15) commits)
-                        (return-from magit-insert-aarne-gerrit-reviews)))
-           (query (string-join
-                   (--map (concat "change:" it) change-ids) " OR "))
-           (req (request
-                 "https://gerrit.ericsson.se/a/changes/"
-                 :params (list (cons "q" query) '("o" . "ALL_REVISIONS"))
-                 :parser (lambda ()
-                           (forward-line) ;; skip XSSI prevention magic
-                           (json-read))
-                 :sync t))
-           (data (request-response-data req))
-           )
-
-      (magit-insert-section (reviews nil t)
-        (magit-insert-heading "Reviews:")
-        (mapc (lambda (it)
-                (magit-insert-section (review)
-                  (insert
-                   (propertize
-                    (format "%s" (cdr (assoc '_number it))) 'face 'magit-aarne-review-name)
-                   " "
-                   (propertize
-                    (format "%s" (cdr (assoc 'status it))) 'face 'magit-aarne-review-status)
-                   " "
-                   (propertize
-                    (format "%s" (substring
-                                  (cdr (assoc 'current_revision it)) 0 9))
-                            'face 'magit-aarne-review-status)
-                   " "
-                   (cdr (assoc 'subject it)) ?\n)))
-              data)
-        (insert ?\n)
-        )
-      )
-    )
+  ;;(defface magit-aarne-review-name
+  ;;  '((((class color) (background light)) :foreground "cyan")
+  ;;    (((class color) (background  dark)) :foreground "cyan"))
+  ;;  "Face for review name.")
+  ;;
+  ;;(defface magit-aarne-review-status
+  ;;  '((((class color) (background light)) :foreground "brightmagenta")
+  ;;    (((class color) (background  dark)) :foreground "brightmagenta"))
+  ;;  "Face for review status.")
+  ;;
+  ;;(defface magit-aarne-review-commit-status
+  ;;  '((((class color) (background light)) :foreground "yellow")
+  ;;    (((class color) (background  dark)) :foreground "yellow"))
+  ;;  "Face for review status.")
+  ;;
+  ;;(defun* magit-insert-aarne-gerrit-reviews ()
+  ;;  (let* ((logs (magit-git-lines "log" "@{upstream}.."))
+  ;;         (commits (--filter (string-match "Change-Id" it) logs))
+  ;;         (change-ids (or
+  ;;                      (--map (substring it 15) commits)
+  ;;                      (return-from magit-insert-aarne-gerrit-reviews)))
+  ;;         (query (string-join
+  ;;                 (--map (concat "change:" it) change-ids) " OR "))
+  ;;         (req (request
+  ;;               "https://gerrit.ericsson.se/a/changes/"
+  ;;               :params (list (cons "q" query) '("o" . "ALL_REVISIONS"))
+  ;;               :parser (lambda ()
+  ;;                         (forward-line) ;; skip XSSI prevention magic
+  ;;                         (json-read))
+  ;;               :sync t))
+  ;;         (data (request-response-data req))
+  ;;         )
+  ;;
+  ;;    (magit-insert-section (reviews nil t)
+  ;;      (magit-insert-heading "Reviews:")
+  ;;      (mapc (lambda (it)
+  ;;              (magit-insert-section (review)
+  ;;                (insert
+  ;;                 (propertize
+  ;;                  (format "%s" (cdr (assoc '_number it))) 'face 'magit-aarne-review-name)
+  ;;                 " "
+  ;;                 (propertize
+  ;;                  (format "%s" (cdr (assoc 'status it))) 'face 'magit-aarne-review-status)
+  ;;                 " "
+  ;;                 (propertize
+  ;;                  (format "%s" (substring
+  ;;                                (cdr (assoc 'current_revision it)) 0 9))
+  ;;                          'face 'magit-aarne-review-status)
+  ;;                 " "
+  ;;                 (cdr (assoc 'subject it)) ?\n)))
+  ;;            data)
+  ;;      (insert ?\n)
+  ;;      )
+  ;;    )
+  ;;  )
 
   (magit-add-section-hook 'magit-status-sections-hook
-			              'magit-insert-aarne-gerrit-reviews
+			              ;;'magit-insert-aarne-gerrit-reviews
                           'magit-insert-unpulled-from-pushremote)
   (magit-add-section-hook 'magit-status-sections-hook
 			              'magit-insert-ignored-files
@@ -358,6 +383,10 @@
 			              'magit-insert-worktrees
                           nil t)
   )
+
+(use-package forge
+  :straight t
+  :after magit)
 
 ;; (use-package magit-gerrit
 ;;   :straight t
@@ -452,3 +481,4 @@
 (put 'magit-clean 'disabled nil)
 
 (diminish 'auto-revert-mode)
+(put 'narrow-to-region 'disabled nil)
