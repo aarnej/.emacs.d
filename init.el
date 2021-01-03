@@ -38,8 +38,12 @@
 (use-package spinner
   :straight t)
 
+(use-package pyvenv
+  :straight t)
+
 (use-package pyenv-mode
   :straight t
+  :after (pyvenv-mode)
   :config
   (pyenv-mode))
 
@@ -103,39 +107,40 @@
   :mode "\\.js\\'")
 
 (use-package js2-mode
-  :straight t
-  ;;:mode "\\.js\\'"
-)
+  :straight t)   ;;:mode "\\.js\\'"
 
-(use-package tide
+;; (use-package tide
+;;   :straight t
+;;   ;; :after (web-mode typescript-mode company flycheck)
+;;   :config
+;;   (defun setup-tide-mode ()
+;;     (interactive)
+;;     (tide-setup)
+;;     (flycheck-mode +1)
+;;     (setq flycheck-check-syntax-automatically '(save mode-enabled))
+;;     (eldoc-mode +1)
+;;     (tide-hl-identifier-mode +1)
+;;     (company-mode +1)
+;;     (setq-default web-mode-comment-formats '(("javascript" . "//")
+;;                                              ("typescript" . "//")
+;;                                              ("jsx" . "//")
+;;                                              ("tsx" . "//"))))
+;;   (add-hook 'typescript-mode-hook #'setup-tide-mode)
+;;   (add-hook 'web-mode-hook #'setup-tide-mode))
+
+(use-package typescript-mode
+  :straight t)
+
+(use-package lsp-mode
   :straight t
-  :after (typescript-mode company flycheck)
-  :hook ((typescript-mode . tide-setup)
-         (typescript-mode . tide-hl-identifier-mode))
-  )
+  :hook ((typescript-mode . lsp)))
 
 (use-package web-mode
   :straight t
-  :mode "\\.tsx\\'" "\\.ts\\'" "\\.js\\'"
+  :mode "\\.tsx\\'"
   :config
-  (defun setup-tide-mode ()
-    (interactive)
-    (tide-setup)
-    (flycheck-mode +1)
-    (setq flycheck-check-syntax-automatically '(save mode-enabled))
-    (eldoc-mode +1)
-    (tide-hl-identifier-mode +1)
-    (company-mode +1)
-    (setq-default web-mode-comment-formats '(("javascript" . "//")
-                                             ("typescript" . "//")
-                                             ("jsx" . "//")
-                                             ("tsx" . "//")))
-    )
-
   ;; aligns annotation to the right hand side
   (setq company-tooltip-align-annotations t)
-
-  (add-hook 'typescript-mode-hook #'setup-tide-mode)
 
   (add-hook 'web-mode-hook
             (lambda ()
@@ -165,8 +170,7 @@
                   (make-local-variable 'adaptive-fill-regexp)
                   (c-setup-paragraph-variables))
 
-                (setq fill-paragraph-function 'c-fill-paragraph)
-                (setup-tide-mode))))
+                (setq fill-paragraph-function 'c-fill-paragraph))))
   )
 
 (use-package nvm
@@ -214,16 +218,25 @@
 (use-package json-mode
   :straight t)
 
-(use-package paredit
+;; (use-package paredit
+;;   :straight t
+;;   :config
+;;   (add-hook 'python-mode-hook #'enable-paredit-mode)
+;;   (add-hook 'web-mode-hook #'enable-paredit-mode)
+;;   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
+
+(use-package smartparens
   :straight t
   :config
-  (add-hook 'python-mode-hook #'enable-paredit-mode)
-  (add-hook 'web-mode-hook #'enable-paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
+  (require 'smartparens-config)
+  (sp-use-smartparens-bindings)
+  (add-hook 'python-mode-hook #'smartparens-mode)
+  (add-hook 'typescript-mode-hook #'smartparens-mode)
+  (add-hook 'emacs-lisp-mode-hook #'smartparens-mode))
 
 (use-package pyenv-mode
   :straight t
-  :after (pyvenv-mode)
+  ;; :after (pyvenv-mode)
   :config
   (defun ssbb-pyenv-hook ()
     "Automatically activates pyenv version if .python-version file exists."
@@ -386,7 +399,8 @@
 
 (use-package forge
   :straight t
-  :after magit)
+  ;; :after magit
+  )
 
 ;; (use-package magit-gerrit
 ;;   :straight t
@@ -395,7 +409,7 @@
 
 (use-package projectile
   :straight t
-  :after (diminish)
+  ;; :after (diminish)
   :bind ("C-x f" . projectile-find-file)
   :bind-keymap
   ("C-c p" . projectile-command-map)
@@ -412,14 +426,14 @@
 
 (use-package undo-tree
   :straight t
-  :after (diminish)
+  ;; :after (diminish)
   :config
   (global-undo-tree-mode)
   (diminish 'undo-tree-mode))
 
 (use-package whitespace
   :straight t
-  :after (diminish)
+  ;; :after (diminish)
   :config
   (add-hook 'before-save-hook 'whitespace-cleanup)
   (add-hook 'makefile-gmake-mode-hook #'whitespace-mode)
@@ -479,6 +493,5 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 (put 'magit-clean 'disabled nil)
-
 (diminish 'auto-revert-mode)
 (put 'narrow-to-region 'disabled nil)

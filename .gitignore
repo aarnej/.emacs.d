@@ -7,4 +7,8 @@ transient/
 server/
 projectile-bookmarks.eld
 ido.last
-
+.cache
+.lsp-session-v1
+forge-database.sqlite
+projectile.cache
+tramp
