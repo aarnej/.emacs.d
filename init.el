@@ -133,8 +133,14 @@
 
 (use-package lsp-mode
   :straight t
-  :hook ((typescript-mode . lsp)
-         (python-mode . lsp)))
+  :hook ((typescript-mode . lsp)))
+
+(use-package lsp-python-ms
+  :straight t
+  :init (setq lsp-python-ms-auto-install-server t)
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-python-ms)
+                          (lsp))))  ; or lsp-deferred
 
 (use-package web-mode
   :straight t
