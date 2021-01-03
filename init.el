@@ -133,7 +133,8 @@
 
 (use-package lsp-mode
   :straight t
-  :hook ((typescript-mode . lsp)))
+  :hook ((typescript-mode . lsp)
+         (python-mode . lsp)))
 
 (use-package web-mode
   :straight t
@@ -254,10 +255,10 @@
   (pyvenv-tracking-mode)
   (pyenv-mode))
 
-(use-package elpy
-  :straight t
-  :config
-  (elpy-enable))
+;; (use-package elpy
+;;   :straight t
+;;   :config
+;;   (elpy-enable))
 
 (use-package flx-ido
   :straight t

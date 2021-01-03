@@ -11,10 +11,10 @@
  '(create-lockfiles nil)
  '(css-indent-offset 2)
  '(custom-enabled-themes '(tango-dark))
- '(elpy-modules
-   '(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-django elpy-module-sane-defaults))
- '(elpy-rpc-backend "jedi")
- '(elpy-shell-echo-input-cont-prompt nil)
+ ;; '(elpy-modules
+ ;;   '(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-django elpy-module-sane-defaults))
+ ;; '(elpy-rpc-backend "jedi")
+ ;; '(elpy-shell-echo-input-cont-prompt nil)
  '(fill-column 79)
  '(flx-ido-threshold 500)
  '(flycheck-check-syntax-automatically '(save mode-enabled))
@@ -51,7 +51,7 @@
  '(markdown-asymmetric-header t)
  '(mode-require-final-newline nil)
  '(package-selected-packages
-   '(eslint-fix elpy prettier tide markdown-mode web-mode typescript-mode transient request rjsx-mode flycheck dired-filter python-docstring json-mode yaml-mode xterm-color xcscope use-package undo-tree projectile popup js2-mode ido-vertical-mode helm-core flx-ido fiplr browse-kill-ring adoc-mode))
+   '(eslint-fix prettier tide markdown-mode web-mode typescript-mode transient request rjsx-mode flycheck dired-filter python-docstring json-mode yaml-mode xterm-color xcscope use-package undo-tree projectile popup js2-mode ido-vertical-mode helm-core flx-ido fiplr browse-kill-ring adoc-mode))
  '(projectile-mode-line '(:eval (format " Pj[%s]" (projectile-project-name))))
  '(python-docstring-sentence-end-double-space nil)
  '(python-fill-docstring-style 'django)
