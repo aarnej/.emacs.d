@@ -11,10 +11,8 @@
  '(create-lockfiles nil)
  '(css-indent-offset 2)
  '(custom-enabled-themes '(tango-dark))
- ;; '(elpy-modules
- ;;   '(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-django elpy-module-sane-defaults))
- ;; '(elpy-rpc-backend "jedi")
- ;; '(elpy-shell-echo-input-cont-prompt nil)
+ '(custom-safe-themes
+   '("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
  '(fill-column 79)
  '(flx-ido-threshold 500)
  '(flycheck-check-syntax-automatically '(save mode-enabled))

@@ -15,6 +15,9 @@
 
 (straight-use-package 'use-package)
 
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
+
 (use-package adoc-mode
   :straight t
   :bind (:map adoc-mode-map ("C-c C-t" . adoc-adjust-title-del))
@@ -69,6 +72,20 @@
 ;; (add-hook 'ag-mode-hook 'wgrep-ag-setup)
 
 (use-package wgrep
+  :straight t)
+
+(use-package smart-mode-line
+  :straight t
+  :config
+  (setq sml/no-confirm-load-theme t)
+  (sml/setup))
+
+(use-package company
+  :straight t)
+
+;; for cmake, go to https://apt.kitware.com/
+;; install also libtool-bin
+(use-package vterm
   :straight t)
 
 ;; (use-package wgrep-ag
@@ -495,10 +512,6 @@
 (load-file "~/.emacs.d/defun.el")
 (global-set-key (kbd "C-c s")  'yank-isearch-string)
 (add-hook 'find-file-hook 'commit_msg_hook)
-
-
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
 (put 'magit-clean 'disabled nil)
 (diminish 'auto-revert-mode)
 (put 'narrow-to-region 'disabled nil)
