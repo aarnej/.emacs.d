@@ -1,4 +1,8 @@
-;; GNU Emacs 26
+;;; init.el --- the init file
+;;; Commentary:
+;;
+
+;;; Code:
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -15,8 +19,37 @@
 
 (straight-use-package 'use-package)
 
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
+;; Customize Emacs built-in stuff
+
+(load-file "~/.emacs.d/defun.el")
+(load-file "~/.emacs.d/vars.el")
+(load-file "~/.emacs.d/faces.el")
+(load-theme 'tango-dark)
+
+(menu-bar-mode 0)
+(column-number-mode 1)
+(global-display-line-numbers-mode 1)
+(global-whitespace-mode 1)
+(recentf-mode 1)
+(show-paren-mode 1)
+(tool-bar-mode 0)
+
+(put 'magit-clean 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+(put 'scroll-left 'disabled nil)
+
+(define-key input-decode-map "\e[A" [C-up])
+(define-key input-decode-map "\e[B" [C-down])
+(define-key input-decode-map "\e[C" [C-right])
+(define-key input-decode-map "\e[D" [C-left])
+
+(add-hook 'emacs-lisp-mode-hook
+	      (lambda () (delete 'indentation::space (symbol-value 'whitespace-style))))
+(add-hook 'find-file-hook 'commit_msg_hook)
+(add-hook 'dired-mode-hook
+          (lambda () (define-key dired-mode-map "Q" 'dired-do-query-replace-regexp)))
+
+;; Extra packages
 
 (use-package adoc-mode
   :straight t
@@ -78,15 +111,24 @@
   :straight t
   :config
   (setq sml/no-confirm-load-theme t)
+  (setq sml/theme 'dark)
   (sml/setup))
 
 (use-package company
-  :straight t)
+  :straight t
+  :hook ((emacs-lisp-mode . company-mode)
+         (python-mode . company-mode)
+         (web-mode . company-mode)
+         (typescript-mode . company-mode))
+  :config
+  (setq company-tooltip-align-annotations t))
 
 ;; for cmake, go to https://apt.kitware.com/
 ;; install also libtool-bin
 (use-package vterm
-  :straight t)
+  :straight t
+  :config
+  (setq vterm-max-scrollback 100000))
 
 ;; (use-package wgrep-ag
 ;;   :straight t)
@@ -97,6 +139,10 @@
 (use-package flycheck
   :straight t
   :config
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (setq flycheck-flake8rc ".flake8")
+  (setq flycheck-shellcheck-follow-sources nil)
+
   (setq-default flycheck-disabled-checkers
                 (append flycheck-disabled-checkers
                         '(javascript-jshint)))
@@ -116,8 +162,6 @@
   ;; (defvaralias 'flycheck-python-flake8-executable 'python-shell-interpreter)
   ;; (defvar flycheck-python-flake8-executable "/home/aarne/.pyenv/shims/python")
   )
-
-
 
 (use-package rjsx-mode
   :straight t
@@ -150,7 +194,8 @@
 
 (use-package lsp-mode
   :straight t
-  :hook ((typescript-mode . lsp)))
+  :hook ((typescript-mode . lsp)
+         (web-mode . lsp)))
 
 (use-package lsp-python-ms
   :straight t
@@ -164,7 +209,13 @@
   :mode "\\.tsx\\'"
   :config
   ;; aligns annotation to the right hand side
-  (setq company-tooltip-align-annotations t)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-comment-formats '(("javascript" . "//")
+                                   ("jsx" . "//")
+                                   ("tsx" . "//")
+                                   ("typescript" . "//")))
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-markup-indent-offset 2)
 
   (add-hook 'web-mode-hook
             (lambda ()
@@ -194,8 +245,7 @@
                   (make-local-variable 'adaptive-fill-regexp)
                   (c-setup-paragraph-variables))
 
-                (setq fill-paragraph-function 'c-fill-paragraph))))
-  )
+                (setq fill-paragraph-function 'c-fill-paragraph)))))
 
 (use-package nvm
   :straight t)
@@ -220,11 +270,11 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown")
   :config
+  (setq markdown-asymmetric-header t)
   (unbind-key "C-c <left>" markdown-mode-map)
   (unbind-key "C-c <right>" markdown-mode-map)
   (unbind-key "C-c <up>" markdown-mode-map)
-  (unbind-key "C-c <down>" markdown-mode-map)
-  )
+  (unbind-key "C-c <down>" markdown-mode-map))
 
 (use-package browse-kill-ring
   :straight t
@@ -232,11 +282,14 @@
   (browse-kill-ring-default-keybindings))
 
 (use-package yaml-mode
-  :straight t)
+  :straight t
+  :config
+  (setq yaml-block-literal-electric-alist '((124 . "") (62 . ""))))
 
 (use-package python-docstring
   :straight t
   :config
+  (setq python-docstring-sentence-end-double-space nil)
   (python-docstring-install))
 
 (use-package json-mode
@@ -254,9 +307,10 @@
   :config
   (require 'smartparens-config)
   (sp-use-smartparens-bindings)
-  (add-hook 'python-mode-hook #'smartparens-mode)
-  (add-hook 'typescript-mode-hook #'smartparens-mode)
-  (add-hook 'emacs-lisp-mode-hook #'smartparens-mode))
+  (add-hook 'python-mode-hook #'smartparens-strict-mode)
+  (add-hook 'typescript-mode-hook #'smartparens-strict-mode)
+  (add-hook 'emacs-lisp-mode-hook #'smartparens-strict-mode)
+  (add-hook 'sh-mode-hook #'smartparens-strict-mode))
 
 (use-package pyenv-mode
   :straight t
@@ -286,6 +340,7 @@
 (use-package flx-ido
   :straight t
   :config
+  (setq flx-ido-threshold 500)
   (flx-ido-mode 1))
 
 (use-package ido
@@ -320,7 +375,9 @@
 )
 
 (use-package diminish
-  :straight t)
+  :straight t
+  :config
+  (diminish 'auto-revert-mode))
 
 (use-package ido-vertical-mode
   :straight t
@@ -329,7 +386,8 @@
 
 (use-package request
   :straight t
-  )
+  :config
+  (setq request-curl-options '("--netrc")))
 
 (use-package frame-fns
   :straight t)
@@ -351,6 +409,21 @@
   :config
   ;; (magit-define-popup-switch 'magit-fetch-popup
   ;;     ?t "Fetch all tags" "--tags")
+
+  (setq magit-diff-refine-hunk 'all)
+  (setq magit-fetch-arguments '("--tags"))
+  (setq magit-gerrit-push-review-to-topic nil)
+  (setq magit-log-arguments '("-n256" "--graph" "--decorate"))
+  (setq magit-log-margin-spec '(28 1 magit-duration-spec))
+  (setq magit-log-section-arguments '("-n256"))
+  (setq magit-log-section-commit-count 20)
+  (setq magit-log-show-margin nil)
+  (setq magit-reflog-show-margin nil)
+  (setq magit-refs-sections-hook '(magit-insert-error-header
+                                   magit-insert-branch-description
+                                   magit-insert-local-branches
+                                   magit-insert-remote-branches))
+
   (transient-append-suffix 'magit-fetch "-p"
     '("-t" "Fetch all tags" "--tags"))
 
@@ -439,6 +512,7 @@
   ("C-c p" . projectile-command-map)
   :config
   (projectile-mode +1)
+  (setq projectile-mode-line '(:eval (format " Pj[%s]" (projectile-project-name))))
   (diminish 'projectile-mode))
 
 (use-package recentf
@@ -453,12 +527,17 @@
   ;; :after (diminish)
   :config
   (global-undo-tree-mode)
+  (setq undo-tree-mode-lighter " Undo-T")
   (diminish 'undo-tree-mode))
 
 (use-package whitespace
   :straight t
   ;; :after (diminish)
   :config
+  (setq whitespace-global-modes '(python-mode))
+  (setq whitespace-line-column 79)
+  (setq whitespace-style '(face trailing tab-mark))
+
   (add-hook 'before-save-hook 'whitespace-cleanup)
   (add-hook 'makefile-gmake-mode-hook #'whitespace-mode)
   (diminish 'global-whitespace-mode)
@@ -467,8 +546,7 @@
 (use-package eslint-fix
   :straight t)
 
-;;;;;;;;;;;;;;;;;;
-;; Key mapping
+;; Global key mapping
 
 (defvar my-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
@@ -477,8 +555,9 @@
     (define-key map (kbd "C-c <up>")    'windmove-up)
     (define-key map (kbd "C-c <down>")  'windmove-down)
     (define-key map (kbd "C-x C-b") 'ibuffer)
+    (define-key map (kbd "C-c s") 'yank-isearch-string)
     map)
-  "Keymap for my-keys-minor-mode.")
+  "Keymap for variable `my-keys-minor-mode'.")
 
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
@@ -486,32 +565,6 @@
 
 (my-keys-minor-mode 1)
 
-;; (global-set-key (kbd "C-c <left>")  'windmove-left)
-;; (global-set-key (kbd "C-c <right>") 'windmove-right)
-;; (global-set-key (kbd "C-c <up>")    'windmove-up)
-;; (global-set-key (kbd "C-c <down>")  'windmove-down)
+(provide 'init)
 
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
-(define-key input-decode-map "\e[A" [C-up])
-(define-key input-decode-map "\e[B" [C-down])
-(define-key input-decode-map "\e[C" [C-right])
-(define-key input-decode-map "\e[D" [C-left])
-
-(define-key dired-mode-map "Q" 'dired-do-query-replace-regexp)
-
-;;;;;;;;;;;
-;; Customize Emacs built-in stuff
-
-(menu-bar-mode 0)
-
-(add-hook 'emacs-lisp-mode-hook
-	  (lambda ()
-	    (delete 'indentation::space (symbol-value 'whitespace-style))))
-
-(load-file "~/.emacs.d/defun.el")
-(global-set-key (kbd "C-c s")  'yank-isearch-string)
-(add-hook 'find-file-hook 'commit_msg_hook)
-(put 'magit-clean 'disabled nil)
-(diminish 'auto-revert-mode)
-(put 'narrow-to-region 'disabled nil)
+;;; init.el ends here
