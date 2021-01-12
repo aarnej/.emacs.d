@@ -83,10 +83,14 @@
   :config
   (pyenv-mode))
 
-(use-package deadgrep
-  :requires spinner
-  :straight (deadgrep :type git :host github :repo "aarnej/deadgrep")
-  :bind (("\C-cg" . deadgrep)))
+(use-package rg
+  :straight t
+  :bind (("\C-cg" . rg)))
+
+;; (use-package deadgrep
+;;   :requires spinner
+;;   :straight (deadgrep :type git :host github :repo "aarnej/deadgrep")
+;;   :bind (("\C-cg" . deadgrep)))
 
 ;; (use-package ag
 ;;   :straight t
@@ -148,19 +152,19 @@
                         '(javascript-jshint)))
   (global-flycheck-mode)
 
-  (defun my/use-eslint-from-node-modules ()
-    (let* ((root (locate-dominating-file
-                  (or (buffer-file-name) default-directory)
-                  "node_modules"))
-           (eslint (and root
-                        (expand-file-name "node_modules/eslint/bin/eslint.js"
-                                          root))))
-      (when (and eslint (file-executable-p eslint))
-        (setq-local flycheck-javascript-eslint-executable eslint))))
+  ;; (defun my/use-eslint-from-node-modules ()
+  ;;   (let* ((root (locate-dominating-file
+  ;;                 (or (buffer-file-name) default-directory)
+  ;;                 "node_modules"))
+  ;;          (eslint (and root
+  ;;                       (expand-file-name "node_modules/eslint/bin/eslint.js"
+  ;;                                         root))))
+  ;;     (when (and eslint (file-executable-p eslint))
+  ;;       (setq-local flycheck-javascript-eslint-executable eslint))))
 
-  (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+  ;; (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
   ;; (defvaralias 'flycheck-python-flake8-executable 'python-shell-interpreter)
-  ;; (defvar flycheck-python-flake8-executable "/home/aarne/.pyenv/shims/python")
+  (defvar flycheck-python-flake8-executable "/home/aarne/.pyenv/shims/python")
   )
 
 (use-package rjsx-mode
@@ -194,15 +198,31 @@
 
 (use-package lsp-mode
   :straight t
+  :after (which-key)
   :hook ((typescript-mode . lsp)
-         (web-mode . lsp)))
+         (web-mode . lsp))
+  :bind-keymap
+  ("C-c l" . lsp-command-map)
+  :config
+  (setq lsp-eslint-server-command
+	'("node"
+	  "/home/aarne/repos/vscode-eslint/server/out/eslintServer.js"
+	  "--stdio"))
+  (add-hook 'lsp-after-initialize-hook (lambda
+					 ()
+					 (flycheck-add-next-checker 'lsp 'python-flake8)))
+  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
 
 (use-package lsp-python-ms
   :straight t
   :init (setq lsp-python-ms-auto-install-server t)
-  :hook (python-mode . (lambda ()
-                          (require 'lsp-python-ms)
-                          (lsp))))  ; or lsp-deferred
+  :hook
+  (python-mode . (lambda ()
+                   (require 'lsp-python-ms)
+                   (lsp-deferred))))
+
+(use-package restclient
+  :straight t)
 
 (use-package web-mode
   :straight t
@@ -309,6 +329,7 @@
   (sp-use-smartparens-bindings)
   (add-hook 'python-mode-hook #'smartparens-strict-mode)
   (add-hook 'typescript-mode-hook #'smartparens-strict-mode)
+  (add-hook 'web-mode-hook #'smartparens-mode)
   (add-hook 'emacs-lisp-mode-hook #'smartparens-strict-mode)
   (add-hook 'sh-mode-hook #'smartparens-strict-mode))
 
@@ -542,6 +563,12 @@
   (add-hook 'makefile-gmake-mode-hook #'whitespace-mode)
   (diminish 'global-whitespace-mode)
   )
+
+(use-package which-key
+  :straight t
+  :config
+  (setq which-key-idle-delay 0.5)
+  (which-key-mode))
 
 (use-package eslint-fix
   :straight t)

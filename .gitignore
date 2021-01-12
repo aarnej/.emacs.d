@@ -12,3 +12,5 @@ ido.last
 forge-database.sqlite
 projectile.cache
 tramp
+.log/
+url/
