@@ -31,3 +31,6 @@
 (setq tar-mode-show-date t)
 (setq truncate-partial-width-windows nil)
 (setq vc-display-status nil)
+(setq enable-recursive-minibuffers t)
+(setq minibuffer-depth-indicate-mode t)
+(setq line-move-visual nil)

@@ -3,7 +3,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Ubuntu Mono" :foundry "DAMA" :slant normal :weight normal :height 150 :width normal))))
+ '(default ((t (:family "Consolas" :foundry "outline" :slant normal :weight normal :height 128 :width normal))))
  '(flymake-error ((t (:inherit error :background "color-225" :foreground "brightred"))))
  '(git-rebase-hash ((t (:foreground "gre"))))
  '(highlight-indentation-face ((t (:inherit ##))))

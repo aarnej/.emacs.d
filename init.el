@@ -30,9 +30,11 @@
 (column-number-mode 1)
 (global-display-line-numbers-mode 1)
 (global-whitespace-mode 1)
+(global-visual-line-mode 1)
 (recentf-mode 1)
 (show-paren-mode 1)
 (tool-bar-mode 0)
+(server-start)
 
 (put 'magit-clean 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
@@ -129,10 +131,10 @@
 
 ;; for cmake, go to https://apt.kitware.com/
 ;; install also libtool-bin
-(use-package vterm
-  :straight t
-  :config
-  (setq vterm-max-scrollback 100000))
+;; (use-package vterm
+;;   :straight t
+;;   :config
+;;   (setq vterm-max-scrollback 100000))
 
 ;; (use-package wgrep-ag
 ;;   :straight t)
@@ -515,10 +517,10 @@
                           nil t)
   )
 
-(use-package forge
-  :straight t
-  ;; :after magit
-  )
+;; (use-package forge
+;;   :straight t
+;;   ;; :after magit
+;;   )
 
 ;; (use-package magit-gerrit
 ;;   :straight t
@@ -593,5 +595,3 @@
 (my-keys-minor-mode 1)
 
 (provide 'init)
-
-;;; init.el ends here
