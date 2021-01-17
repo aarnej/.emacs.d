@@ -575,6 +575,9 @@
 (use-package eslint-fix
   :straight t)
 
+(use-package gh
+  :straight t)
+
 ;; Global key mapping
 
 (defvar my-keys-minor-mode-map
