@@ -33,5 +33,5 @@
 (setq vc-display-status nil)
 (setq enable-recursive-minibuffers t)
 (setq minibuffer-depth-indicate-mode t)
-(setq line-move-visual nil)
 (setq tramp-histfile-override "/home/aarne/.tramp_history")
+

@@ -34,7 +34,9 @@
 (recentf-mode 1)
 (show-paren-mode 1)
 (tool-bar-mode 0)
-(server-start)
+(if (and (fboundp 'server-running-p)
+	 (not (server-running-p)))
+    (server-start))
 
 (put 'magit-clean 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
@@ -50,6 +52,8 @@
 (add-hook 'find-file-hook 'commit_msg_hook)
 (add-hook 'dired-mode-hook
           (lambda () (define-key dired-mode-map "Q" 'dired-do-query-replace-regexp)))
+(add-hook 'shell-mode-hook (lambda () (display-line-numbers-mode 0)))
+
 
 ;; Extra packages
 
@@ -79,15 +83,13 @@
 (use-package pyvenv
   :straight t)
 
-(use-package pyenv-mode
-  :straight t
-  :after (pyvenv-mode)
-  :config
-  (pyenv-mode))
-
 (use-package rg
   :straight t
-  :bind (("\C-cg" . rg)))
+  :bind (("\C-cg" . rg-aarne))
+  :config
+  (rg-define-search rg-aarne
+    :files "*"
+    :dir project))
 
 ;; (use-package deadgrep
 ;;   :requires spinner
@@ -206,6 +208,7 @@
   :bind-keymap
   ("C-c l" . lsp-command-map)
   :config
+  (setq lsp-auto-guess-root nil)
   (setq lsp-eslint-server-command
 	'("node"
 	  "/home/aarne/repos/vscode-eslint/server/out/eslintServer.js"
@@ -296,7 +299,8 @@
   (unbind-key "C-c <left>" markdown-mode-map)
   (unbind-key "C-c <right>" markdown-mode-map)
   (unbind-key "C-c <up>" markdown-mode-map)
-  (unbind-key "C-c <down>" markdown-mode-map))
+  (unbind-key "C-c <down>" markdown-mode-map)
+  (add-hook 'markdown-mode-hook (lambda () (setq indent-tabs-mode nil))))
 
 (use-package browse-kill-ring
   :straight t
@@ -324,20 +328,19 @@
 ;;   (add-hook 'web-mode-hook #'enable-paredit-mode)
 ;;   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
 
-(use-package smartparens
-  :straight t
-  :config
-  (require 'smartparens-config)
-  (sp-use-smartparens-bindings)
-  (add-hook 'python-mode-hook #'smartparens-strict-mode)
-  (add-hook 'typescript-mode-hook #'smartparens-strict-mode)
-  (add-hook 'web-mode-hook #'smartparens-mode)
-  (add-hook 'emacs-lisp-mode-hook #'smartparens-strict-mode)
-  (add-hook 'sh-mode-hook #'smartparens-strict-mode))
+;; (use-package smartparens
+;;   :straight t
+;;   :config
+;;   (require 'smartparens-config)
+;;   (sp-use-smartparens-bindings)
+;;   (add-hook 'python-mode-hook #'smartparens-strict-mode)
+;;   (add-hook 'typescript-mode-hook #'smartparens-strict-mode)
+;;   (add-hook 'web-mode-hook #'smartparens-mode)
+;;   (add-hook 'emacs-lisp-mode-hook #'smartparens-strict-mode)
+;;   (add-hook 'sh-mode-hook #'smartparens-strict-mode))
 
 (use-package pyenv-mode
-  :straight t
-  ;; :after (pyvenv-mode)
+  :straight (pyenv-mode :type git :host github :repo "aarnej/pyenv-mode")
   :config
   (defun ssbb-pyenv-hook ()
     "Automatically activates pyenv version if .python-version file exists."
@@ -346,14 +349,14 @@
        (let ((pyenv-version-path (f-expand ".python-version" path)))
          (when (f-exists? pyenv-version-path)
            (let ((version (s-trim (f-read-text pyenv-version-path 'utf-8))))
+	     (pyenv-mode t)
              (pyenv-mode-set version)
              (setq-local pyvenv-activate (pyenv-mode-full-path version)
              )
            ))))))
 
   (add-hook 'python-mode-hook 'ssbb-pyenv-hook)
-  (pyvenv-tracking-mode)
-  (pyenv-mode))
+  (pyvenv-tracking-mode))
 
 ;; (use-package elpy
 ;;   :straight t
@@ -578,14 +581,21 @@
 (use-package gh
   :straight t)
 
+(use-package vlf
+  :straight t
+  :config
+  (require 'vlf-setup))
+
 ;; Global key mapping
 
 (defvar my-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c <left>")  'windmove-left)
-    (define-key map (kbd "C-c <right>") 'windmove-right)
-    (define-key map (kbd "C-c <up>")    'windmove-up)
-    (define-key map (kbd "C-c <down>")  'windmove-down)
+    (define-key map (kbd "C-c c b") 'windmove-left)
+    (define-key map (kbd "C-c c f") 'windmove-right)
+    (define-key map (kbd "C-c c p") 'windmove-up)
+    (define-key map (kbd "C-c c n") 'windmove-down)
+    (define-key map (kbd "C-c b p") 'previous-buffer)
+    (define-key map (kbd "C-c b n") 'next-buffer)
     (define-key map (kbd "C-x C-b") 'ibuffer)
     (define-key map (kbd "C-c s") 'yank-isearch-string)
     map)
@@ -596,5 +606,8 @@
   :init-value t)
 
 (my-keys-minor-mode 1)
+
+(keyboard-translate ?\C-h ?\C-?)  ; translate 'C-h' to DEL
+(keyboard-translate ?\C-? ?\C-h)  ; translate DEL to 'C-h'.
 
 (provide 'init)
