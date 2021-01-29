@@ -4,6 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Consolas" :foundry "outline" :slant normal :weight normal :height 128 :width normal))))
+ '(diff-refine-added ((t (:inherit diff-refine-changed :background "#008700"))))
  '(flymake-error ((t (:inherit error :background "color-225" :foreground "brightred"))))
  '(git-rebase-hash ((t (:foreground "gre"))))
  '(highlight-indentation-face ((t (:inherit ##))))
