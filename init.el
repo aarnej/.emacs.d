@@ -87,6 +87,7 @@
   :straight t
   :bind (("\C-cg" . rg-aarne))
   :config
+  (setq rg-command-line-flags '("--max-columns" "240" "--max-columns-preview"))
   (rg-define-search rg-aarne
     :files "*"
     :dir project))
@@ -588,18 +589,17 @@
 
 ;; Global key mapping
 
-(defvar my-keys-minor-mode-map
+(setq my-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c c b") 'windmove-left)
-    (define-key map (kbd "C-c c f") 'windmove-right)
-    (define-key map (kbd "C-c c p") 'windmove-up)
-    (define-key map (kbd "C-c c n") 'windmove-down)
+    (define-key map (kbd "C-c <left>")  'windmove-left)
+    (define-key map (kbd "C-c <right>") 'windmove-right)
+    (define-key map (kbd "C-c <up>")    'windmove-up)
+    (define-key map (kbd "C-c <down>")  'windmove-down)
     (define-key map (kbd "C-c b p") 'previous-buffer)
     (define-key map (kbd "C-c b n") 'next-buffer)
     (define-key map (kbd "C-x C-b") 'ibuffer)
     (define-key map (kbd "C-c s") 'yank-isearch-string)
-    map)
-  "Keymap for variable `my-keys-minor-mode'.")
+    map))
 
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
@@ -607,7 +607,7 @@
 
 (my-keys-minor-mode 1)
 
-(keyboard-translate ?\C-h ?\C-?)  ; translate 'C-h' to DEL
-(keyboard-translate ?\C-? ?\C-h)  ; translate DEL to 'C-h'.
+;; (keyboard-translate ?\C-h ?\C-?)  ; translate 'C-h' to DEL
+;; (keyboard-translate ?\C-? ?\C-h)  ; translate DEL to 'C-h'.
 
 (provide 'init)
