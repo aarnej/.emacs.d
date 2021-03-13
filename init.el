@@ -125,12 +125,14 @@
 
 (use-package company
   :straight t
+  :bind (("\C-c." . company-complete))
   :hook ((emacs-lisp-mode . company-mode)
          (python-mode . company-mode)
          (web-mode . company-mode)
          (typescript-mode . company-mode))
   :config
-  (setq company-tooltip-align-annotations t))
+  (setq company-tooltip-align-annotations t)
+  (setq company-idle-delay nil))
 
 ;; for cmake, go to https://apt.kitware.com/
 ;; install also libtool-bin
