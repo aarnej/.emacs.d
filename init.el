@@ -575,6 +575,7 @@
 (use-package which-key
   :straight t
   :config
+  (setq which-key-idle-delay 2.0)
   (which-key-mode))
 
 (use-package eslint-fix
