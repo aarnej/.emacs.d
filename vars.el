@@ -16,6 +16,7 @@
               (name 16 -1)
               " " filename)))
 (setq indent-tabs-mode nil)
+(setq-default indent-tabs-mode nil)
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message nil)
 (setq js-indent-level 2)
