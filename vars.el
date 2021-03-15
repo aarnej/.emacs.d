@@ -27,7 +27,7 @@
 (setq python-fill-docstring-style 'django)
 (setq recentf-max-saved-items 1000)
 (setq show-paren-style 'mixed)
-(setq split-height-threshold nil)
+; (setq split-height-threshold nil)
 (setq tab-width 4)
 (setq tar-mode-show-date t)
 (setq truncate-partial-width-windows nil)

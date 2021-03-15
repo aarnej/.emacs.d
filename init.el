@@ -581,8 +581,8 @@
 (use-package eslint-fix
   :straight t)
 
-(use-package gh
-  :straight t)
+;; (use-package gh
+;; :straight t)
 
 (use-package vlf
   :straight t
