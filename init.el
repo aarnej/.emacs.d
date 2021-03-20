@@ -37,6 +37,7 @@
 (if (and (fboundp 'server-running-p)
 	 (not (server-running-p)))
     (server-start))
+(electric-indent-mode 0)
 
 (put 'magit-clean 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
@@ -202,7 +203,9 @@
 ;;   (add-hook 'web-mode-hook #'setup-tide-mode))
 
 ;; (use-package typescript-mode
-;;   :straight t)
+;;   :straight t
+;;   :config
+;;   (setq typescript-indent-level 2))
 
 (use-package lsp-mode
   :straight t
@@ -275,7 +278,8 @@
                   (make-local-variable 'adaptive-fill-regexp)
                   (c-setup-paragraph-variables))
 
-                (setq fill-paragraph-function 'c-fill-paragraph)))))
+                (setq indent-tabs-mode nil)
+		(setq fill-paragraph-function 'c-fill-paragraph)))))
 
 (use-package nvm
   :straight t)
