@@ -130,7 +130,8 @@
   :hook ((emacs-lisp-mode . company-mode)
          (python-mode . company-mode)
          (web-mode . company-mode)
-         (typescript-mode . company-mode))
+         ;; (typescript-mode . company-mode)
+         )
   :config
   (setq company-tooltip-align-annotations t)
   (setq company-idle-delay nil))
@@ -201,15 +202,15 @@
 ;;   (add-hook 'typescript-mode-hook #'setup-tide-mode)
 ;;   (add-hook 'web-mode-hook #'setup-tide-mode))
 
-(use-package typescript-mode
-  :straight t
-  :config
-  (setq typescript-indent-level 2))
+;; (use-package typescript-mode
+;;   :straight t
+;;   :config
+;;   (setq typescript-indent-level 2))
 
 (use-package lsp-mode
   :straight t
   :after (which-key)
-  :hook ((typescript-mode . lsp)
+  :hook (;; (typescript-mode . lsp)
          (web-mode . lsp))
   :bind-keymap
   ("C-c l" . lsp-command-map)
@@ -237,7 +238,8 @@
 
 (use-package web-mode
   :straight t
-  :mode "\\.tsx\\'"
+  :mode (("\\.tsx\\'" . web-mode)
+         ("\\.ts\\'" . web-mode))
   :config
   ;; aligns annotation to the right hand side
   (setq web-mode-code-indent-offset 2)

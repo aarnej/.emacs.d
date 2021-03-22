@@ -27,7 +27,7 @@
 (setq python-fill-docstring-style 'django)
 (setq recentf-max-saved-items 1000)
 (setq show-paren-style 'mixed)
-; (setq split-height-threshold nil)
+(setq split-height-threshold 0)
 (setq tab-width 4)
 (setq tar-mode-show-date t)
 (setq truncate-partial-width-windows nil)
@@ -35,4 +35,5 @@
 (setq enable-recursive-minibuffers t)
 (setq minibuffer-depth-indicate-mode t)
 (setq tramp-histfile-override "/home/aarne/.tramp_history")
-
+;; (setq display-buffer-alist '((".*" . (display-buffer-same-window (inhibit-same-window . nil)))))
+;
