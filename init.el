@@ -452,6 +452,7 @@
   (setq magit-log-section-commit-count 20)
   (setq magit-log-show-margin nil)
   (setq magit-reflog-show-margin nil)
+  (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
   (setq magit-refs-sections-hook '(magit-insert-error-header
                                    magit-insert-branch-description
                                    magit-insert-local-branches
