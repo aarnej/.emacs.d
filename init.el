@@ -376,6 +376,10 @@
 ;;   :config
 ;;   (elpy-enable))
 
+(use-package ace-jump-mode
+  :straight t
+  :bind (("C-c SPC" . 'ace-jump-mode)))
+
 (use-package expand-region
   :straight t)
 
