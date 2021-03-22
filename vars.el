@@ -37,4 +37,5 @@
 (setq tramp-histfile-override "/home/aarne/.tramp_history")
 ;; (setq display-buffer-alist '((".*" . (display-buffer-same-window (inhibit-same-window . nil)))))
 (setq winner-dont-bind-my-keys t)
+(setq help-window-select t)
 ;
