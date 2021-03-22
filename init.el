@@ -33,6 +33,7 @@
 (global-visual-line-mode 1)
 (recentf-mode 1)
 (show-paren-mode 1)
+(winner-mode 1)
 (tool-bar-mode 0)
 (if (and (fboundp 'server-running-p)
 	 (not (server-running-p)))
@@ -66,6 +67,9 @@
   (add-hook 'adoc-mode-hook
           (lambda ()
             (electric-indent-local-mode 0))))
+
+(use-package idomenu
+  :straight t)
 
 (use-package xterm-color
   :straight t
