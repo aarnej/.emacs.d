@@ -376,6 +376,12 @@
 ;;   :config
 ;;   (elpy-enable))
 
+(use-package expand-region
+  :straight t)
+
+(use-package multiple-cursors
+  :straight t)
+
 (use-package flx-ido
   :straight t
   :config
