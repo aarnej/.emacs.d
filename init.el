@@ -382,10 +382,17 @@
   (setq flx-ido-threshold 500)
   (flx-ido-mode 1))
 
+(use-package ido-completing-read+
+  :after (ido)
+  :straight t
+  :config
+  (ido-ubiquitous-mode 1))
+
 (use-package ido
   :straight t
   :config
   (ido-mode 1)
+  (ido-everywhere 1)
   ;;(defvar ido-enable-replace-completing-read t
   ;;  "If t, use ido-completing-read instead of completing-read if possible.
   ;;
