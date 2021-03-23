@@ -59,14 +59,13 @@
 
 ;; Extra packages
 
-(use-package adoc-mode
-  :straight t
-  :bind (:map adoc-mode-map ("C-c C-t" . adoc-adjust-title-del))
-  :mode (("\\.adoc\\'" . adoc-mode))
-  :config
-  (add-hook 'adoc-mode-hook
-          (lambda ()
-            (electric-indent-local-mode 0))))
+;; (use-package adoc-mode
+;;   :straight t
+;;   :mode (("\\.adoc\\'" . adoc-mode))
+;;   :config
+;;   (add-hook 'adoc-mode-hook
+;;           (lambda ()
+;;             (electric-indent-local-mode 0))))
 
 (use-package idomenu
   :straight t)
@@ -90,7 +89,6 @@
 
 (use-package rg
   :straight t
-  :bind (("\C-cg" . rg-aarne))
   :config
   (setq rg-command-line-flags '("--max-columns" "240" "--max-columns-preview"))
   (rg-define-search rg-aarne
@@ -130,7 +128,6 @@
 
 (use-package company
   :straight t
-  :bind (("\C-c." . company-complete))
   :hook ((emacs-lisp-mode . company-mode)
          (python-mode . company-mode)
          (web-mode . company-mode)
@@ -216,9 +213,8 @@
   :after (which-key)
   :hook (;; (typescript-mode . lsp)
          (web-mode . lsp))
-  :bind-keymap
-  ("C-c l" . lsp-command-map)
   :config
+  (setq lsp-keymap-prefix "C-c l")
   (setq lsp-auto-guess-root nil)
   (setq lsp-eslint-server-command
 	'("node"
@@ -309,10 +305,6 @@
   :init (setq markdown-command "multimarkdown")
   :config
   (setq markdown-asymmetric-header t)
-  (unbind-key "C-c <left>" markdown-mode-map)
-  (unbind-key "C-c <right>" markdown-mode-map)
-  (unbind-key "C-c <up>" markdown-mode-map)
-  (unbind-key "C-c <down>" markdown-mode-map)
   (add-hook 'markdown-mode-hook (lambda () (setq indent-tabs-mode nil))))
 
 (use-package browse-kill-ring
@@ -377,8 +369,7 @@
 ;;   (elpy-enable))
 
 (use-package ace-jump-mode
-  :straight t
-  :bind (("C-c SPC" . 'ace-jump-mode)))
+  :straight t)
 
 (use-package expand-region
   :straight t)
@@ -445,23 +436,20 @@
   :config
   (setq request-curl-options '("--netrc")))
 
-(use-package frame-fns
-  :straight t)
+;; (use-package frame-fns
+;;   :straight t)
 
-(use-package frame-cmds
-  :straight t
-  :bind (("C-x 5 r" . rename-frame)))
+;; (use-package frame-cmds
+;;   :straight t
+;;   :bind (("C-x 5 r" . rename-frame)))
 
-(use-package icicles
-  :straight  (icicles :type git :host github :repo "aarnej/icicles")
-  :bind (("C-x 5 o" . icicle-select-frame)))
+;; (use-package icicles
+;;   :straight  (icicles :type git :host github :repo "aarnej/icicles")
+;;   :bind (("C-x 5 o" . icicle-select-frame)))
 
 (use-package magit
   :straight (magit :type git :host github :repo "aarnej/magit")
   :commands (magit-status)
-  :bind (("C-x v l" . magit-log-buffer-file)
-         ("C-x v =" . magit-diff-buffer-file)
-         ("C-x g" . magit-status))
   :config
   ;; (magit-define-popup-switch 'magit-fetch-popup
   ;;     ?t "Fetch all tags" "--tags")
@@ -564,9 +552,6 @@
 (use-package projectile
   :straight t
   ;; :after (diminish)
-  :bind ("C-x f" . projectile-find-file)
-  :bind-keymap
-  ("C-c p" . projectile-command-map)
   :config
   (projectile-mode +1)
   (setq projectile-mode-line '(:eval (format " Pj[%s]" (projectile-project-name))))
@@ -617,25 +602,31 @@
   :config
   (require 'vlf-setup))
 
-;; Global key mapping
+(setq aj-mode-map (make-sparse-keymap))
 
-(setq my-keys-minor-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c <left>")  'windmove-left)
-    (define-key map (kbd "C-c <right>") 'windmove-right)
-    (define-key map (kbd "C-c <up>")    'windmove-up)
-    (define-key map (kbd "C-c <down>")  'windmove-down)
-    (define-key map (kbd "C-c b p") 'previous-buffer)
-    (define-key map (kbd "C-c b n") 'next-buffer)
-    (define-key map (kbd "C-x C-b") 'ibuffer)
-    (define-key map (kbd "C-c s") 'yank-isearch-string)
-    map))
+(define-key aj-mode-map         (kbd "C-c SPC") 'ace-jump-mode)
+(define-key aj-mode-map         (kbd "C-c .") 'company-complete)
+(define-key aj-mode-map         (kbd "C-c <down>") 'windmove-down)
+(define-key aj-mode-map         (kbd "C-c <left>") 'windmove-left)
+(define-key aj-mode-map         (kbd "C-c <right>") 'windmove-right)
+(define-key aj-mode-map         (kbd "C-c <up>") 'windmove-up)
+(define-key aj-mode-map         (kbd "C-c b n") 'next-buffer)
+(define-key aj-mode-map         (kbd "C-c b p") 'previous-buffer)
+(define-key aj-mode-map         (kbd "C-c g") 'rg-aarne)
+(define-key lsp-mode-map        (kbd "C-c l") lsp-command-map)
+(define-key projectile-mode-map (kbd "C-c p") projectile-command-map)
+(define-key aj-mode-map         (kbd "C-c s") 'yank-isearch-string)
+(define-key aj-mode-map         (kbd "C-x C-b") 'ibuffer)
+(define-key projectile-mode-map (kbd "C-x f") 'projectile-find-file)
+(define-key aj-mode-map         (kbd "C-x g") 'magit-status)
+(define-key aj-mode-map         (kbd "C-x v l") 'magit-log-buffer-file)
+(define-key aj-mode-map         (kbd "C-x v =") 'magit-diff-buffer-file)
 
-(define-minor-mode my-keys-minor-mode
+(define-minor-mode aj-mode
   "A minor mode so that my key settings override annoying major modes."
   :init-value t)
 
-(my-keys-minor-mode 1)
+(aj-mode 1)
 
 ;; (keyboard-translate ?\C-h ?\C-?)  ; translate 'C-h' to DEL
 ;; (keyboard-translate ?\C-? ?\C-h)  ; translate DEL to 'C-h'.
