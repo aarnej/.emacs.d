@@ -612,6 +612,7 @@
 (define-key aj-mode-map         (kbd "C-c <up>") 'windmove-up)
 (define-key aj-mode-map         (kbd "C-c b n") 'next-buffer)
 (define-key aj-mode-map         (kbd "C-c b p") 'previous-buffer)
+(define-key aj-mode-map         (kbd "C-c e") 'er/expand-region)
 (define-key aj-mode-map         (kbd "C-c g") 'rg-aarne)
 (define-key lsp-mode-map        (kbd "C-c l") lsp-command-map)
 (define-key projectile-mode-map (kbd "C-c p") projectile-command-map)
