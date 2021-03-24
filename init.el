@@ -602,8 +602,14 @@
   :config
   (require 'vlf-setup))
 
+(use-package move-text
+  :straight t)
+
 (setq aj-mode-map (make-sparse-keymap))
 
+(define-key aj-mode-map         (kbd "M-<up>") 'move-text-up)
+(define-key aj-mode-map         (kbd "M-<down>") 'move-text-down)
+;;                                   "C-c C-  reserved by web-mode
 (define-key aj-mode-map         (kbd "C-c SPC") 'ace-jump-mode)
 (define-key aj-mode-map         (kbd "C-c .") 'company-complete)
 (define-key aj-mode-map         (kbd "C-c <down>") 'windmove-down)
