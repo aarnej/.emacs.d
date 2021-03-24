@@ -605,6 +605,9 @@
 (use-package move-text
   :straight t)
 
+(use-package dockerfile-mode
+  :straight t)
+
 (setq aj-mode-map (make-sparse-keymap))
 
 (define-key aj-mode-map         (kbd "M-<up>") 'move-text-up)
