@@ -18,6 +18,7 @@
     (load bootstrap-file nil 'nomessage))
 
 (straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
 ;; Customize Emacs built-in stuff
 
@@ -59,19 +60,9 @@
 
 ;; Extra packages
 
-;; (use-package adoc-mode
-;;   :straight t
-;;   :mode (("\\.adoc\\'" . adoc-mode))
-;;   :config
-;;   (add-hook 'adoc-mode-hook
-;;           (lambda ()
-;;             (electric-indent-local-mode 0))))
-
-(use-package idomenu
-  :straight t)
+(use-package idomenu)
 
 (use-package xterm-color
-  :straight t
   :config
   (setq comint-output-filter-functions
         (remove 'ansi-color-process-output comint-output-filter-functions))
@@ -81,77 +72,36 @@
                'comint-preoutput-filter-functions
                'xterm-color-filter nil t))))
 
-(use-package spinner
-  :straight t)
+(use-package spinner)
 
-(use-package pyvenv
-  :straight t)
+(use-package pyvenv)
 
 (use-package rg
-  :straight t
   :config
   (setq rg-command-line-flags '("--max-columns" "240" "--max-columns-preview"))
   (rg-define-search rg-aarne
     :files "*"
     :dir project))
 
-;; (use-package deadgrep
-;;   :requires spinner
-;;   :straight (deadgrep :type git :host github :repo "aarnej/deadgrep")
-;;   :bind (("\C-cg" . deadgrep)))
-
-;; (use-package ag
-;;   :straight t
-;;   :bind (("\C-c \S-g" .
-;; 	      (lambda () (interactive)
-;; 	        (setq current-prefix-arg '(4)) ; C-u
-;; 	        (call-interactively 'ag)))
-;;          ("\C-cg" .
-;; 	      (lambda () (interactive)
-;; 	        (setq current-prefix-arg '(4)) ; C-u
-;; 	        (call-interactively 'ag-project-regexp))))
-;;   :config
-;;   (add-hook 'ag-mode-hook (lambda () (setq truncate-lines t))))
-
-;; (autoload 'wgrep-ag-setup "wgrep-ag")
-;; (add-hook 'ag-mode-hook 'wgrep-ag-setup)
-
-(use-package wgrep
-  :straight t)
+(use-package wgrep)
 
 (use-package smart-mode-line
-  :straight t
   :config
   (setq sml/no-confirm-load-theme t)
   (setq sml/theme 'dark)
   (sml/setup))
 
 (use-package company
-  :straight t
   :hook ((emacs-lisp-mode . company-mode)
          (python-mode . company-mode)
-         (web-mode . company-mode)
-         ;; (typescript-mode . company-mode)
-         )
+         (web-mode . company-mode))
   :config
   (setq company-tooltip-align-annotations t)
   (setq company-idle-delay nil))
 
-;; for cmake, go to https://apt.kitware.com/
-;; install also libtool-bin
-;; (use-package vterm
-;;   :straight t
-;;   :config
-;;   (setq vterm-max-scrollback 100000))
-
-;; (use-package wgrep-ag
-;;   :straight t)
-
-(use-package dired-filter
-  :straight t)
+(use-package dired-filter)
 
 (use-package flycheck
-  :straight t
   :config
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
   (setq flycheck-flake8rc ".flake8")
@@ -161,55 +111,14 @@
                 (append flycheck-disabled-checkers
                         '(javascript-jshint)))
   (global-flycheck-mode)
-
-  ;; (defun my/use-eslint-from-node-modules ()
-  ;;   (let* ((root (locate-dominating-file
-  ;;                 (or (buffer-file-name) default-directory)
-  ;;                 "node_modules"))
-  ;;          (eslint (and root
-  ;;                       (expand-file-name "node_modules/eslint/bin/eslint.js"
-  ;;                                         root))))
-  ;;     (when (and eslint (file-executable-p eslint))
-  ;;       (setq-local flycheck-javascript-eslint-executable eslint))))
-
-  ;; (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
-  ;; (defvaralias 'flycheck-python-flake8-executable 'python-shell-interpreter)
-  (defvar flycheck-python-flake8-executable "/home/aarne/.pyenv/shims/python")
-  )
+  (defvar flycheck-python-flake8-executable "/home/aarne/.pyenv/shims/python"))
 
 (use-package rjsx-mode
-  :straight t
   :mode "\\.js\\'")
 
-(use-package js2-mode
-  :straight t)   ;;:mode "\\.js\\'"
-
-;; (use-package tide
-;;   :straight t
-;;   ;; :after (web-mode typescript-mode company flycheck)
-;;   :config
-;;   (defun setup-tide-mode ()
-;;     (interactive)
-;;     (tide-setup)
-;;     (flycheck-mode +1)
-;;     (setq flycheck-check-syntax-automatically '(save mode-enabled))
-;;     (eldoc-mode +1)
-;;     (tide-hl-identifier-mode +1)
-;;     (company-mode +1)
-;;     (setq-default web-mode-comment-formats '(("javascript" . "//")
-;;                                              ("typescript" . "//")
-;;                                              ("jsx" . "//")
-;;                                              ("tsx" . "//"))))
-;;   (add-hook 'typescript-mode-hook #'setup-tide-mode)
-;;   (add-hook 'web-mode-hook #'setup-tide-mode))
-
-;; (use-package typescript-mode
-;;   :straight t
-;;   :config
-;;   (setq typescript-indent-level 2))
+(use-package js2-mode)   ;;:mode "\\.js\\'"
 
 (use-package lsp-mode
-  :straight t
   :after (which-key)
   :hook (;; (typescript-mode . lsp)
          (web-mode . lsp))
@@ -226,18 +135,15 @@
   (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
 
 (use-package lsp-python-ms
-  :straight t
   :init (setq lsp-python-ms-auto-install-server t)
   :hook
   (python-mode . (lambda ()
                    (require 'lsp-python-ms)
                    (lsp-deferred))))
 
-(use-package restclient
-  :straight t)
+(use-package restclient)
 
 (use-package web-mode
-  :straight t
   :mode (("\\.tsx\\'" . web-mode)
          ("\\.ts\\'" . web-mode))
   :config
@@ -281,11 +187,9 @@
                 (setq indent-tabs-mode nil)
 		(setq fill-paragraph-function 'c-fill-paragraph)))))
 
-(use-package nvm
-  :straight t)
+(use-package nvm)
 
-(use-package iter2
-  :straight t)
+(use-package iter2)
 
 ;; (use-package prettier
 ;;   :straight (prettier :type git :host github :repo "jscheid/prettier.el")
@@ -297,7 +201,6 @@
 ;;   (add-hook 'before-save-hook #'my-prettier-before-save-hook))
 
 (use-package markdown-mode
-  :straight t
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
@@ -308,41 +211,19 @@
   (add-hook 'markdown-mode-hook (lambda () (setq indent-tabs-mode nil))))
 
 (use-package browse-kill-ring
-  :straight t
   :config
   (browse-kill-ring-default-keybindings))
 
 (use-package yaml-mode
-  :straight t
   :config
   (setq yaml-block-literal-electric-alist '((124 . "") (62 . ""))))
 
 (use-package python-docstring
-  :straight t
   :config
   (setq python-docstring-sentence-end-double-space nil)
   (python-docstring-install))
 
-(use-package json-mode
-  :straight t)
-
-;; (use-package paredit
-;;   :straight t
-;;   :config
-;;   (add-hook 'python-mode-hook #'enable-paredit-mode)
-;;   (add-hook 'web-mode-hook #'enable-paredit-mode)
-;;   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
-
-;; (use-package smartparens
-;;   :straight t
-;;   :config
-;;   (require 'smartparens-config)
-;;   (sp-use-smartparens-bindings)
-;;   (add-hook 'python-mode-hook #'smartparens-strict-mode)
-;;   (add-hook 'typescript-mode-hook #'smartparens-strict-mode)
-;;   (add-hook 'web-mode-hook #'smartparens-mode)
-;;   (add-hook 'emacs-lisp-mode-hook #'smartparens-strict-mode)
-;;   (add-hook 'sh-mode-hook #'smartparens-strict-mode))
+(use-package json-mode)
 
 (use-package pyenv-mode
   :straight (pyenv-mode :type git :host github :repo "aarnej/pyenv-mode")
@@ -363,97 +244,44 @@
   (add-hook 'python-mode-hook 'ssbb-pyenv-hook)
   (pyvenv-tracking-mode))
 
-;; (use-package elpy
-;;   :straight t
-;;   :config
-;;   (elpy-enable))
+(use-package ace-jump-mode)
 
-(use-package ace-jump-mode
-  :straight t)
+(use-package expand-region)
 
-(use-package expand-region
-  :straight t)
-
-(use-package multiple-cursors
-  :straight t)
+(use-package multiple-cursors)
 
 (use-package flx-ido
-  :straight t
   :config
   (setq flx-ido-threshold 500)
   (flx-ido-mode 1))
 
 (use-package ido-completing-read+
   :after (ido)
-  :straight t
   :config
   (ido-ubiquitous-mode 1))
 
 (use-package ido
-  :straight t
   :config
   (ido-mode 1)
   (ido-everywhere 1)
-  ;;(defvar ido-enable-replace-completing-read t
-  ;;  "If t, use ido-completing-read instead of completing-read if possible.
-  ;;
-  ;;  Set it to nil using let in around-advice for functions where the
-  ;;  original completing-read is required.  For example, if a function
-  ;;  foo absolutely must use the original completing-read, define some
-  ;;  advice like this:
-  ;;
-  ;;  (defadvice foo (around original-completing-read-only activate)
-  ;;    (let (ido-enable-replace-completing-read) ad-do-it))")
-  ;;
-  ;;;; Replace completing-read wherever possible, unless directed otherwise
-  ;;(defadvice completing-read
-  ;;    (around use-ido-when-possible activate)
-  ;;  (if (or (not ido-enable-replace-completing-read) ; Manual override disable ido
-  ;;          (and (boundp 'ido-cur-list)
-  ;;               ido-cur-list)) ; Avoid infinite loop from ido calling this
-  ;;      ad-do-it
-  ;;    (let ((allcomp (all-completions "" collection predicate)))
-  ;;      (if allcomp
-  ;;          (setq ad-return-value
-  ;;                (ido-completing-read prompt
-  ;;                                     allcomp
-  ;;                                     nil require-match initial-input hist def))
-  ;;        ad-do-it)))))
 )
 
 (use-package diminish
-  :straight t
   :config
   (diminish 'auto-revert-mode))
 
 (use-package ido-vertical-mode
-  :straight t
   :config
   (ido-vertical-mode))
 
 (use-package request
-  :straight t
   :config
   (setq request-curl-options '("--netrc")))
-
-;; (use-package frame-fns
-;;   :straight t)
-
-;; (use-package frame-cmds
-;;   :straight t
-;;   :bind (("C-x 5 r" . rename-frame)))
-
-;; (use-package icicles
-;;   :straight  (icicles :type git :host github :repo "aarnej/icicles")
-;;   :bind (("C-x 5 o" . icicle-select-frame)))
 
 (use-package magit
   :straight (magit :type git :host github :repo "aarnej/magit")
   :commands (magit-status)
   :config
-  ;; (magit-define-popup-switch 'magit-fetch-popup
-  ;;     ?t "Fetch all tags" "--tags")
-
   (setq magit-diff-refine-hunk 'all)
   (setq magit-fetch-arguments '("--tags"))
   (setq magit-gerrit-push-review-to-topic nil)
@@ -472,64 +300,7 @@
   (transient-append-suffix 'magit-fetch "-p"
     '("-t" "Fetch all tags" "--tags"))
 
-  ;;(defface magit-aarne-review-name
-  ;;  '((((class color) (background light)) :foreground "cyan")
-  ;;    (((class color) (background  dark)) :foreground "cyan"))
-  ;;  "Face for review name.")
-  ;;
-  ;;(defface magit-aarne-review-status
-  ;;  '((((class color) (background light)) :foreground "brightmagenta")
-  ;;    (((class color) (background  dark)) :foreground "brightmagenta"))
-  ;;  "Face for review status.")
-  ;;
-  ;;(defface magit-aarne-review-commit-status
-  ;;  '((((class color) (background light)) :foreground "yellow")
-  ;;    (((class color) (background  dark)) :foreground "yellow"))
-  ;;  "Face for review status.")
-  ;;
-  ;;(defun* magit-insert-aarne-gerrit-reviews ()
-  ;;  (let* ((logs (magit-git-lines "log" "@{upstream}.."))
-  ;;         (commits (--filter (string-match "Change-Id" it) logs))
-  ;;         (change-ids (or
-  ;;                      (--map (substring it 15) commits)
-  ;;                      (return-from magit-insert-aarne-gerrit-reviews)))
-  ;;         (query (string-join
-  ;;                 (--map (concat "change:" it) change-ids) " OR "))
-  ;;         (req (request
-  ;;               "https://gerrit.ericsson.se/a/changes/"
-  ;;               :params (list (cons "q" query) '("o" . "ALL_REVISIONS"))
-  ;;               :parser (lambda ()
-  ;;                         (forward-line) ;; skip XSSI prevention magic
-  ;;                         (json-read))
-  ;;               :sync t))
-  ;;         (data (request-response-data req))
-  ;;         )
-  ;;
-  ;;    (magit-insert-section (reviews nil t)
-  ;;      (magit-insert-heading "Reviews:")
-  ;;      (mapc (lambda (it)
-  ;;              (magit-insert-section (review)
-  ;;                (insert
-  ;;                 (propertize
-  ;;                  (format "%s" (cdr (assoc '_number it))) 'face 'magit-aarne-review-name)
-  ;;                 " "
-  ;;                 (propertize
-  ;;                  (format "%s" (cdr (assoc 'status it))) 'face 'magit-aarne-review-status)
-  ;;                 " "
-  ;;                 (propertize
-  ;;                  (format "%s" (substring
-  ;;                                (cdr (assoc 'current_revision it)) 0 9))
-  ;;                          'face 'magit-aarne-review-status)
-  ;;                 " "
-  ;;                 (cdr (assoc 'subject it)) ?\n)))
-  ;;            data)
-  ;;      (insert ?\n)
-  ;;      )
-  ;;    )
-  ;;  )
-
   (magit-add-section-hook 'magit-status-sections-hook
-			              ;;'magit-insert-aarne-gerrit-reviews
                           'magit-insert-unpulled-from-pushremote)
   (magit-add-section-hook 'magit-status-sections-hook
 			              'magit-insert-ignored-files
@@ -539,42 +310,21 @@
                           nil t)
   )
 
-;; (use-package forge
-;;   :straight t
-;;   ;; :after magit
-;;   )
-
-;; (use-package magit-gerrit
-;;   :straight t
-;;   :config
-;;   (setq-default magit-gerrit-ssh-creds ""))
-
 (use-package projectile
-  :straight t
-  ;; :after (diminish)
   :config
   (projectile-mode +1)
   (setq projectile-mode-line '(:eval (format " Pj[%s]" (projectile-project-name))))
   (diminish 'projectile-mode))
 
-(use-package recentf
-    :straight t)
-
-;; (use-package robot-mode
-;;   :straight t
-;;   :mode "\\.robot\\'")
+(use-package recentf)
 
 (use-package undo-tree
-  :straight t
-  ;; :after (diminish)
   :config
   (global-undo-tree-mode)
   (setq undo-tree-mode-lighter " Undo-T")
   (diminish 'undo-tree-mode))
 
 (use-package whitespace
-  :straight t
-  ;; :after (diminish)
   :config
   (setq whitespace-global-modes '(python-mode))
   (setq whitespace-line-column 79)
@@ -586,59 +336,51 @@
   )
 
 (use-package which-key
-  :straight t
   :config
   (setq which-key-idle-delay 2.0)
   (which-key-mode))
 
-(use-package eslint-fix
-  :straight t)
-
-;; (use-package gh
-;; :straight t)
+(use-package eslint-fix)
 
 (use-package vlf
-  :straight t
   :config
   (require 'vlf-setup))
 
-(use-package move-text
-  :straight t)
+(use-package move-text)
 
-(use-package dockerfile-mode
-  :straight t)
+(use-package dockerfile-mode)
 
 (setq aj-mode-map (make-sparse-keymap))
 
-(define-key aj-mode-map         (kbd "M-<up>") 'move-text-up)
-(define-key aj-mode-map         (kbd "M-<down>") 'move-text-down)
+(define-key aj-mode-map         (kbd "M-<up>")      'move-text-up)
+(define-key aj-mode-map         (kbd "M-<down>")    'move-text-down)
 ;;                                   "C-c C-  reserved by web-mode
-(define-key aj-mode-map         (kbd "C-c SPC") 'ace-jump-mode)
-(define-key aj-mode-map         (kbd "C-c .") 'company-complete)
-(define-key aj-mode-map         (kbd "C-c <down>") 'windmove-down)
-(define-key aj-mode-map         (kbd "C-c <left>") 'windmove-left)
+(define-key aj-mode-map         (kbd "C-c SPC")     'ace-jump-mode)
+(define-key aj-mode-map         (kbd "C-c .")       'company-complete)
+(define-key aj-mode-map         (kbd "C-c <down>")  'windmove-down)
+(define-key aj-mode-map         (kbd "C-c <left>")  'windmove-left)
 (define-key aj-mode-map         (kbd "C-c <right>") 'windmove-right)
-(define-key aj-mode-map         (kbd "C-c <up>") 'windmove-up)
-(define-key aj-mode-map         (kbd "C-c b n") 'next-buffer)
-(define-key aj-mode-map         (kbd "C-c b p") 'previous-buffer)
-(define-key aj-mode-map         (kbd "C-c e") 'er/expand-region)
-(define-key aj-mode-map         (kbd "C-c g") 'rg-aarne)
-(define-key lsp-mode-map        (kbd "C-c l") lsp-command-map)
-(define-key projectile-mode-map (kbd "C-c p") projectile-command-map)
-(define-key aj-mode-map         (kbd "C-c s") 'yank-isearch-string)
-(define-key aj-mode-map         (kbd "C-x C-b") 'ibuffer)
-(define-key projectile-mode-map (kbd "C-x f") 'projectile-find-file)
-(define-key aj-mode-map         (kbd "C-x g") 'magit-status)
-(define-key aj-mode-map         (kbd "C-x v l") 'magit-log-buffer-file)
-(define-key aj-mode-map         (kbd "C-x v =") 'magit-diff-buffer-file)
+(define-key aj-mode-map         (kbd "C-c <up>")    'windmove-up)
+(define-key aj-mode-map         (kbd "C-c b n")     'next-buffer)
+(define-key aj-mode-map         (kbd "C-c b p")     'previous-buffer)
+(define-key aj-mode-map         (kbd "C-c x")       'er/expand-region)
+(define-key aj-mode-map         (kbd "C-c g")       'rg-aarne)
+(define-key lsp-mode-map        (kbd "C-c l")       lsp-command-map)
+(define-key aj-mode-map         (kbd "C-c ma")      'mc/vertical-align-with-space)
+(define-key aj-mode-map         (kbd "C-c me")      'mc/edit-lines)
+(define-key aj-mode-map         (kbd "C-c mx")      'mc/mark-more-like-this-extended)
+(define-key projectile-mode-map (kbd "C-c p")       projectile-command-map)
+(define-key aj-mode-map         (kbd "C-c s")       'yank-isearch-string)
+(define-key aj-mode-map         (kbd "C-x C-b")     'ibuffer)
+(define-key projectile-mode-map (kbd "C-x f")       'projectile-find-file)
+(define-key aj-mode-map         (kbd "C-x g")       'magit-status)
+(define-key aj-mode-map         (kbd "C-x v l")     'magit-log-buffer-file)
+(define-key aj-mode-map         (kbd "C-x v =")     'magit-diff-buffer-file)
 
 (define-minor-mode aj-mode
   "A minor mode so that my key settings override annoying major modes."
   :init-value t)
 
 (aj-mode 1)
-
-;; (keyboard-translate ?\C-h ?\C-?)  ; translate 'C-h' to DEL
-;; (keyboard-translate ?\C-? ?\C-h)  ; translate DEL to 'C-h'.
 
 (provide 'init)
