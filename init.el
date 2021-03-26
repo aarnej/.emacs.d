@@ -45,11 +45,6 @@
 (put 'narrow-to-region 'disabled nil)
 (put 'scroll-left 'disabled nil)
 
-(define-key input-decode-map "\e[A" [C-up])
-(define-key input-decode-map "\e[B" [C-down])
-(define-key input-decode-map "\e[C" [C-right])
-(define-key input-decode-map "\e[D" [C-left])
-
 (add-hook 'emacs-lisp-mode-hook
 	      (lambda () (delete 'indentation::space (symbol-value 'whitespace-style))))
 (add-hook 'find-file-hook 'commit_msg_hook)
@@ -107,21 +102,18 @@
   (setq flycheck-flake8rc ".flake8")
   (setq flycheck-shellcheck-follow-sources nil)
 
-  (setq-default flycheck-disabled-checkers
-                (append flycheck-disabled-checkers
-                        '(javascript-jshint)))
+  (setq-default flycheck-disabled-checkers '(javascript-jshint emacs-lisp-checkdoc))
   (global-flycheck-mode)
   (defvar flycheck-python-flake8-executable "/home/aarne/.pyenv/shims/python"))
 
 (use-package rjsx-mode
   :mode "\\.js\\'")
 
-(use-package js2-mode)   ;;:mode "\\.js\\'"
+(use-package js2-mode)
 
 (use-package lsp-mode
   :after (which-key)
-  :hook (;; (typescript-mode . lsp)
-         (web-mode . lsp))
+  :hook ((web-mode . lsp))
   :config
   (setq lsp-keymap-prefix "C-c l")
   (setq lsp-auto-guess-root nil)
@@ -129,9 +121,7 @@
 	'("node"
 	  "/home/aarne/repos/vscode-eslint/server/out/eslintServer.js"
 	  "--stdio"))
-  (add-hook 'lsp-after-initialize-hook (lambda
-					 ()
-					 (flycheck-add-next-checker 'lsp 'python-flake8)))
+  (add-hook 'lsp-after-initialize-hook (lambda () (flycheck-add-next-checker 'lsp 'python-flake8)))
   (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
 
 (use-package lsp-python-ms
@@ -350,8 +340,12 @@
 
 (use-package dockerfile-mode)
 
-(setq aj-mode-map (make-sparse-keymap))
+(define-key input-decode-map "\e[A" [C-up])
+(define-key input-decode-map "\e[B" [C-down])
+(define-key input-decode-map "\e[C" [C-right])
+(define-key input-decode-map "\e[D" [C-left])
 
+(setq aj-mode-map (make-sparse-keymap))
 (define-key aj-mode-map         (kbd "M-<up>")      'move-text-up)
 (define-key aj-mode-map         (kbd "M-<down>")    'move-text-down)
 ;;                                   "C-c C-  reserved by web-mode
@@ -384,3 +378,4 @@
 (aj-mode 1)
 
 (provide 'init)
+
