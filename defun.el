@@ -26,3 +26,37 @@
 		 (string-match regexp name))
 	(message "deleted buffer with name %s" name)
 	(kill-buffer buffer)))))
+
+(defun me/duplicate-line (&optional stay)
+  "Duplicate current line.
+With optional argument STAY true, leave point where it was."
+  (save-excursion
+    (move-end-of-line nil)
+    (save-excursion
+      (insert (buffer-substring (point-at-bol) (point-at-eol))))
+    (newline))
+  (unless stay
+    (let ((column (current-column)))
+      (forward-line)
+      (forward-char column))))
+
+(defun me/duplicate-backward ()
+  "Duplicate current line upward or region backward.
+If region was active, keep it so that the command can be repeated."
+  (interactive)
+  (if (region-active-p)
+      (let (deactivate-mark)
+        (save-excursion
+          (insert (buffer-substring (region-beginning) (region-end)))))
+    (me/duplicate-line t)))
+
+(defun me/duplicate-forward ()
+  "Duplicate current line downward or region forward.
+If region was active, keep it so that the command can be repeated."
+  (interactive)
+  (if (region-active-p)
+      (let (deactivate-mark (point (point)))
+        (insert (buffer-substring (region-beginning) (region-end)))
+        (push-mark point))
+    (me/duplicate-line)))
+
