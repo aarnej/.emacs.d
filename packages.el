@@ -18,9 +18,7 @@
   :custom
   (rg-command-line-flags '("--max-columns" "240" "--max-columns-preview"))
   :config
-  (rg-define-search rg-aarne
-    :files "*"
-    :dir project))
+  (rg-define-search rg-aarne :files "*" :dir project))
 
 (use-package wgrep)
 
@@ -143,8 +141,6 @@
   :custom
   (markdown-command "multimarkdown")
   (markdown-asymmetric-header t)
-  :custom-face
-  (markdown-header-face-3 ((t (:inherit markdown-header-face :foreground "color-39" :weight light :height 1.0))))
   :config
   (add-hook 'markdown-mode-hook (lambda () (setq indent-tabs-mode nil))))
 
@@ -288,3 +284,13 @@
 (use-package move-text)
 
 (use-package dockerfile-mode)
+
+(use-package shackle
+  :hook
+  (after-init . shackle-mode)
+  :custom
+  (shackle-inhibit-window-quit-on-same-windows t)
+  (shackle-rules '((help-mode :same t)
+                   (helpful-mode :same t)
+                   (process-menu-mode :same t)))
+  (shackle-select-reused-windows t))
