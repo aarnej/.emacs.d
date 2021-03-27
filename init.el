@@ -24,7 +24,6 @@
 
 (load-file "~/.emacs.d/defun.el")
 (load-file "~/.emacs.d/vars.el")
-(load-file "~/.emacs.d/faces.el")
 (load-theme 'tango-dark)
 
 (menu-bar-mode 0)
@@ -72,8 +71,9 @@
 (use-package pyvenv)
 
 (use-package rg
+  :custom
+  (rg-command-line-flags '("--max-columns" "240" "--max-columns-preview"))
   :config
-  (setq rg-command-line-flags '("--max-columns" "240" "--max-columns-preview"))
   (rg-define-search rg-aarne
     :files "*"
     :dir project))
@@ -81,28 +81,29 @@
 (use-package wgrep)
 
 (use-package smart-mode-line
+  :custom
+  (sml/no-confirm-load-theme t)
+  (sml/theme 'dark)
   :config
-  (setq sml/no-confirm-load-theme t)
-  (setq sml/theme 'dark)
   (sml/setup))
 
 (use-package company
   :hook ((emacs-lisp-mode . company-mode)
          (python-mode . company-mode)
          (web-mode . company-mode))
-  :config
-  (setq company-tooltip-align-annotations t)
-  (setq company-idle-delay nil))
+  :custom
+  (company-tooltip-align-annotations t)
+  (company-idle-delay nil))
 
 (use-package dired-filter)
 
 (use-package flycheck
+  :custom
+  (flycheck-check-syntax-automatically '(save mode-enabled))
+  (flycheck-flake8rc ".flake8")
+  (flycheck-shellcheck-follow-sources nil)
+  (flycheck-disabled-checkers '(javascript-jshint emacs-lisp-checkdoc))
   :config
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (setq flycheck-flake8rc ".flake8")
-  (setq flycheck-shellcheck-follow-sources nil)
-
-  (setq-default flycheck-disabled-checkers '(javascript-jshint emacs-lisp-checkdoc))
   (global-flycheck-mode)
   (defvar flycheck-python-flake8-executable "/home/aarne/.pyenv/shims/python"))
 
@@ -114,13 +115,13 @@
 (use-package lsp-mode
   :after (which-key)
   :hook ((web-mode . lsp))
+  :custom
+  (lsp-keymap-prefix "C-c l")
+  (lsp-auto-guess-root nil)
+  (lsp-eslint-server-command '("node"
+	                           "/home/aarne/repos/vscode-eslint/server/out/eslintServer.js"
+	                           "--stdio"))
   :config
-  (setq lsp-keymap-prefix "C-c l")
-  (setq lsp-auto-guess-root nil)
-  (setq lsp-eslint-server-command
-	'("node"
-	  "/home/aarne/repos/vscode-eslint/server/out/eslintServer.js"
-	  "--stdio"))
   (add-hook 'lsp-after-initialize-hook (lambda () (flycheck-add-next-checker 'lsp 'python-flake8)))
   (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
 
@@ -136,16 +137,16 @@
 (use-package web-mode
   :mode (("\\.tsx\\'" . web-mode)
          ("\\.ts\\'" . web-mode))
-  :config
+  :custom
   ;; aligns annotation to the right hand side
-  (setq web-mode-code-indent-offset 2)
-  (setq web-mode-comment-formats '(("javascript" . "//")
-                                   ("jsx" . "//")
-                                   ("tsx" . "//")
-                                   ("typescript" . "//")))
-  (setq web-mode-css-indent-offset 2)
-  (setq web-mode-markup-indent-offset 2)
-
+  (web-mode-code-indent-offset 2)
+  (web-mode-comment-formats '(("javascript" . "//")
+                              ("jsx" . "//")
+                              ("tsx" . "//")
+                              ("typescript" . "//")))
+  (web-mode-css-indent-offset 2)
+  (web-mode-markup-indent-offset 2)
+  :config
   (add-hook 'web-mode-hook
             (lambda ()
               (when (member (file-name-extension buffer-file-name) '("tsx" "ts"))
@@ -195,9 +196,12 @@
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown")
+  :custom
+  (markdown-command "multimarkdown")
+  (markdown-asymmetric-header t)
+  :custom-face
+  (markdown-header-face-3 ((t (:inherit markdown-header-face :foreground "color-39" :weight light :height 1.0))))
   :config
-  (setq markdown-asymmetric-header t)
   (add-hook 'markdown-mode-hook (lambda () (setq indent-tabs-mode nil))))
 
 (use-package browse-kill-ring
@@ -205,12 +209,13 @@
   (browse-kill-ring-default-keybindings))
 
 (use-package yaml-mode
-  :config
-  (setq yaml-block-literal-electric-alist '((124 . "") (62 . ""))))
+  :custom
+  (yaml-block-literal-electric-alist '((124 . "") (62 . ""))))
 
 (use-package python-docstring
+  :custom
+  (python-docstring-sentence-end-double-space nil)
   :config
-  (setq python-docstring-sentence-end-double-space nil)
   (python-docstring-install))
 
 (use-package json-mode)
@@ -241,8 +246,9 @@
 (use-package multiple-cursors)
 
 (use-package flx-ido
+  :custom
+  (flx-ido-threshold 500)
   :config
-  (setq flx-ido-threshold 500)
   (flx-ido-mode 1))
 
 (use-package ido-completing-read+
@@ -265,28 +271,28 @@
   (ido-vertical-mode))
 
 (use-package request
-  :config
-  (setq request-curl-options '("--netrc")))
+  :custom
+  (request-curl-options '("--netrc")))
 
 (use-package magit
   :straight (magit :type git :host github :repo "aarnej/magit")
   :commands (magit-status)
-  :config
-  (setq magit-diff-refine-hunk 'all)
-  (setq magit-fetch-arguments '("--tags"))
-  (setq magit-gerrit-push-review-to-topic nil)
-  (setq magit-log-arguments '("-n256" "--graph" "--decorate"))
-  (setq magit-log-margin-spec '(28 1 magit-duration-spec))
-  (setq magit-log-section-arguments '("-n256"))
-  (setq magit-log-section-commit-count 20)
-  (setq magit-log-show-margin nil)
-  (setq magit-reflog-show-margin nil)
-  (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
-  (setq magit-refs-sections-hook '(magit-insert-error-header
-                                   magit-insert-branch-description
-                                   magit-insert-local-branches
-                                   magit-insert-remote-branches))
+  :custom
+  (magit-diff-refine-hunk 'all)
+  (magit-fetch-arguments '("--tags"))
+  (magit-log-arguments '("-n256" "--graph" "--decorate"))
+  (magit-log-margin-spec '(28 1 magit-duration-spec))
+  (magit-log-section-arguments '("-n256"))
+  (magit-log-section-commit-count 20)
+  (magit-log-show-margin nil)
+  (magit-reflog-show-margin nil)
+  (magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
+  (magit-refs-sections-hook '(magit-insert-error-header
+                              magit-insert-branch-description
+                              magit-insert-local-branches
+                              magit-insert-remote-branches))
 
+  :config
   (transient-append-suffix 'magit-fetch "-p"
     '("-t" "Fetch all tags" "--tags"))
 
@@ -303,7 +309,6 @@
 (use-package projectile
   :config
   (projectile-mode +1)
-  (setq projectile-mode-line '(:eval (format " Pj[%s]" (projectile-project-name))))
   (diminish 'projectile-mode))
 
 (use-package recentf)
@@ -311,23 +316,23 @@
 (use-package undo-tree
   :config
   (global-undo-tree-mode)
-  (setq undo-tree-mode-lighter " Undo-T")
   (diminish 'undo-tree-mode))
 
 (use-package whitespace
+  :custom
+  (whitespace-global-modes '(python-mode))
+  (whitespace-line-column 79)
+  (whitespace-style '(face trailing tab-mark))
   :config
-  (setq whitespace-global-modes '(python-mode))
-  (setq whitespace-line-column 79)
-  (setq whitespace-style '(face trailing tab-mark))
-
   (add-hook 'before-save-hook 'whitespace-cleanup)
   (add-hook 'makefile-gmake-mode-hook #'whitespace-mode)
   (diminish 'global-whitespace-mode)
   )
 
 (use-package which-key
+  :custom
+  (which-key-idle-delay 2.0)
   :config
-  (setq which-key-idle-delay 2.0)
   (which-key-mode))
 
 (use-package eslint-fix)
