@@ -197,7 +197,10 @@
   (ido-ubiquitous-mode 1))
 
 (use-package ido
+  :custom
+  (ido-auto-merge-work-directories-length -1)
   :config
+  (add-to-list 'ido-read-file-name-non-ido 'dired-create-directory)
   (ido-mode 1)
   (ido-everywhere 1)
 )
