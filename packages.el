@@ -54,6 +54,10 @@
 
 (use-package js2-mode)
 
+(use-package dash
+  :config
+  (with-eval-after-load 'info-look (dash-register-info-lookup)))
+
 (use-package lsp-mode
   :after (which-key)
   :hook ((web-mode . lsp))
