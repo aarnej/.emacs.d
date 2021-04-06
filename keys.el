@@ -21,7 +21,7 @@
 (define-key aj-mode-map         (kbd "C-c g")       'rg-aarne)
 (define-key lsp-mode-map        (kbd "C-c l")       lsp-command-map)
 (define-key aj-mode-map         (kbd "C-c ma")      'mc/vertical-align-with-space)
-(define-key aj-mode-map         (kbd "C-c md")      'me/duplicate-forward)
+(define-key aj-mode-map         (kbd "C-c md")      'me/duplicate-backward)
 (define-key aj-mode-map         (kbd "C-c me")      'mc/edit-lines)
 (define-key aj-mode-map         (kbd "C-c mx")      'mc/mark-more-like-this-extended)
 (define-key projectile-mode-map (kbd "C-c p")       projectile-command-map)

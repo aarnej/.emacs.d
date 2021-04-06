@@ -54,6 +54,10 @@
 
 (use-package js2-mode)
 
+(use-package dash
+  :config
+  (with-eval-after-load 'info-look (dash-register-info-lookup)))
+
 (use-package lsp-mode
   :after (which-key)
   :hook ((web-mode . lsp))
@@ -197,7 +201,10 @@
   (ido-ubiquitous-mode 1))
 
 (use-package ido
+  :custom
+  (ido-auto-merge-work-directories-length -1)
   :config
+  (add-to-list 'ido-read-file-name-non-ido 'dired-create-directory)
   (ido-mode 1)
   (ido-everywhere 1)
 )
