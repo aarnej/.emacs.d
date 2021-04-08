@@ -17,6 +17,7 @@
 (define-key aj-mode-map         (kbd "C-c b p")     'previous-buffer)
 (define-key aj-mode-map         (kbd "C-c x")       'er/expand-region)
 (define-key aj-mode-map         (kbd "C-c g")       'rg-aarne)
+(define-key aj-mode-map         (kbd "C-c i")       'imenu)
 (define-key lsp-mode-map        (kbd "C-c l")       lsp-command-map)
 (define-key aj-mode-map         (kbd "C-c ma")      'mc/vertical-align-with-space)
 (define-key aj-mode-map         (kbd "C-c md")      'me/duplicate-backward)
