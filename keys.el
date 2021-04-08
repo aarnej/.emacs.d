@@ -6,6 +6,8 @@
 (setq aj-mode-map (make-sparse-keymap))
 (define-key aj-mode-map         (kbd "M-<up>")      'move-text-up)
 (define-key aj-mode-map         (kbd "M-<down>")    'move-text-down)
+(define-key aj-mode-map         (kbd "ESC <up>")    'move-text-up)
+(define-key aj-mode-map         (kbd "ESC <down>")  'move-text-down)
 ;;                                   "C-c C-  reserved by web-mode
 (define-key aj-mode-map         (kbd "C-c SPC")     'ace-jump-mode)
 (define-key aj-mode-map         (kbd "C-c .")       'company-complete)
@@ -30,6 +32,8 @@
 (define-key aj-mode-map         (kbd "C-x g")       'magit-status)
 (define-key aj-mode-map         (kbd "C-x v l")     'magit-log-buffer-file)
 (define-key aj-mode-map         (kbd "C-x v =")     'magit-diff-buffer-file)
+
+(global-unset-key (kbd "C-x m")) ;; send mail
 
 (define-minor-mode aj-mode
   "A minor mode so that my key settings override annoying major modes."

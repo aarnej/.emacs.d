@@ -1,4 +1,8 @@
 (setq-default
+ sql-postgres-login-params '((user :default "")
+                             (database :default "")
+                             (server :default "")
+                             (port :default 5434))
  custom-file null-device
  Buffer-menu-name-width 60
  auto-save-default nil
