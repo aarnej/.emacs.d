@@ -66,7 +66,7 @@ If region was active, keep it so that the command can be repeated."
        (list (region-beginning) (region-end))
      (list (line-beginning-position) (line-beginning-position 2)))))
 
-(advice-add 'kill-region :before #'slick-cut)
+;; (advice-add 'kill-region :before #'slick-cut)
 
 (defun slick-copy (beg end)
   (interactive
@@ -75,4 +75,4 @@ If region was active, keep it so that the command can be repeated."
      (message "Copied line")
      (list (line-beginning-position) (line-beginning-position 2)))))
 
-(advice-add 'kill-ring-save :before #'slick-copy)
+;; (advice-add 'kill-ring-save :before #'slick-copy)

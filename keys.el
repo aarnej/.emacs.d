@@ -34,6 +34,7 @@
 (define-key aj-mode-map         (kbd "C-x v =")     'magit-diff-buffer-file)
 
 (global-unset-key (kbd "C-x m")) ;; send mail
+(global-unset-key (kbd "C-z")) ;; suspend frame
 
 (define-minor-mode aj-mode
   "A minor mode so that my key settings override annoying major modes."
