@@ -43,6 +43,7 @@
  winner-dont-bind-my-keys t
  help-window-select t
  sentence-end-double-space nil
+ grep-save-buffers nil
  )
 
 (load-theme 'tango-dark)
