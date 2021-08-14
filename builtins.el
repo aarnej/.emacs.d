@@ -20,18 +20,17 @@
                          (name 16 -1)
                          " " filename))
  indent-tabs-mode nil
- indent-tabs-mode nil
  inhibit-startup-screen t
  initial-scratch-message nil
  js-indent-level 2
  kill-ring-max 100
  make-backup-files nil
- mode-require-final-newline 'ask
+ ; mode-require-final-newline 'ask
  require-final-newline 'ask
  python-fill-docstring-style 'django
  recentf-max-saved-items 1000
  show-paren-style 'mixed
- split-height-threshold 0
+ ; split-height-threshold 0
  tab-width 4
  tar-mode-show-date t
  truncate-partial-width-windows nil
