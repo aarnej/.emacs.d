@@ -58,25 +58,25 @@
   :config
   (with-eval-after-load 'info-look (dash-register-info-lookup)))
 
-(use-package lsp-mode
-  :after (which-key)
-  :hook ((web-mode . lsp))
-  :custom
-  (lsp-keymap-prefix "C-c l")
-  (lsp-auto-guess-root nil)
-  (lsp-eslint-server-command '("node"
-	                           "/home/aarne/repos/vscode-eslint/server/out/eslintServer.js"
-	                           "--stdio"))
-  :config
-  (add-hook 'lsp-after-initialize-hook (lambda () (flycheck-add-next-checker 'lsp 'python-flake8)))
-  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
+;; (use-package lsp-mode
+;;   :after (which-key)
+;;   :hook ((web-mode . lsp))
+;;   :custom
+;;   (lsp-keymap-prefix "C-c l")
+;;   (lsp-auto-guess-root nil)
+;;   (lsp-eslint-server-command '("node"
+;; 	                           "/home/aarne/repos/vscode-eslint/server/out/eslintServer.js"
+;; 	                           "--stdio"))
+;;   :config
+;;   (add-hook 'lsp-after-initialize-hook (lambda () (flycheck-add-next-checker 'lsp 'python-flake8)))
+;;   (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
 
-(use-package lsp-python-ms
-  :init (setq lsp-python-ms-auto-install-server t)
-  :hook
-  (python-mode . (lambda ()
-                   (require 'lsp-python-ms)
-                   (lsp-deferred))))
+;; (use-package lsp-python-ms
+;;   :init (setq lsp-python-ms-auto-install-server t)
+;;   :hook
+;;   (python-mode . (lambda ()
+;;                    (require 'lsp-python-ms)
+;;                    (lsp-deferred))))
 
 (use-package restclient)
 
