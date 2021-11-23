@@ -18,7 +18,7 @@
 (define-key aj-mode-map         (kbd "C-c b n")     'next-buffer)
 (define-key aj-mode-map         (kbd "C-c b p")     'previous-buffer)
 (define-key aj-mode-map         (kbd "C-c x")       'er/expand-region)
-(define-key aj-mode-map         (kbd "C-c g")       'rg-dwim-current-dir)
+(define-key aj-mode-map         (kbd "C-c g")       'rg-aarne-dir)
 (define-key aj-mode-map         (kbd "C-c G")       'rg-aarne)
 (define-key aj-mode-map         (kbd "C-c i")       'imenu)
 ;; (define-key lsp-mode-map        (kbd "C-c l")       lsp-command-map)

@@ -18,6 +18,7 @@
   :custom
   (rg-command-line-flags '("--max-columns" "240" "--max-columns-preview"))
   :config
+  (rg-define-search rg-aarne-dir :files "*" :dir current)
   (rg-define-search rg-aarne :files "*" :dir project))
 
 (use-package wgrep)
@@ -292,12 +293,12 @@
 
 (use-package dockerfile-mode)
 
-(use-package shackle
-  :hook
-  (after-init . shackle-mode)
-  :custom
-  (shackle-inhibit-window-quit-on-same-windows t)
-  (shackle-rules '((help-mode :same t)
-                   (helpful-mode :same t)
-                   (process-menu-mode :same t)))
-  (shackle-select-reused-windows t))
+;; (use-package shackle
+;;   :hook
+;;   (after-init . shackle-mode)
+;;   :custom
+;;   (shackle-inhibit-window-quit-on-same-windows t)
+;;   (shackle-rules '((help-mode :same t)
+;;                    (helpful-mode :same t)
+;;                    (process-menu-mode :same t)))
+;;   (shackle-select-reused-windows t))

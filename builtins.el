@@ -52,6 +52,7 @@
 (global-display-line-numbers-mode 1)
 (global-whitespace-mode 1)
 (global-visual-line-mode 1)
+(global-superword-mode 1)
 (recentf-mode 1)
 (show-paren-mode 1)
 (winner-mode 1)
