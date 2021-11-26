@@ -52,7 +52,7 @@
 (global-display-line-numbers-mode 1)
 (global-whitespace-mode 1)
 (global-visual-line-mode 1)
-(global-superword-mode 1)
+(global-superword-mode 0)
 (recentf-mode 1)
 (show-paren-mode 1)
 (winner-mode 1)
@@ -61,6 +61,11 @@
 	 (not (server-running-p)))
     (server-start))
 (electric-indent-mode 0)
+
+(modify-syntax-entry ?_ "w" shell-mode-syntax-table)
+(modify-syntax-entry ?- "w" shell-mode-syntax-table)
+(modify-syntax-entry ?_ "w" python-mode-syntax-table)
+(modify-syntax-entry ?- "w" python-mode-syntax-table)
 
 (put 'magit-clean 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
