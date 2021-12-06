@@ -46,7 +46,7 @@
  cursor-type 'box
  blink-cursor-blinks 0
  w32-use-visible-system-caret nil
- default-frame-alist '((font . "Consolas-10"))
+ default-frame-alist '((font . "DejaVu Sans Mono-9"))
  scroll-conservatively 10000
  )
 
