@@ -29,7 +29,7 @@
  require-final-newline 'ask
  python-fill-docstring-style 'django
  recentf-max-saved-items 1000
- show-paren-style 'mixed
+ ;; show-paren-style 'mixed
  ; split-height-threshold 0
  tab-width 4
  tar-mode-show-date t
@@ -43,13 +43,19 @@
  help-window-select t
  sentence-end-double-space nil
  grep-save-buffers nil
+ cursor-type 'box
+ blink-cursor-blinks 0
+ w32-use-visible-system-caret nil
+ default-frame-alist '((font . "Consolas-10"))
+ scroll-conservatively 10000
  )
 
 (load-theme 'tango-dark)
 
 (menu-bar-mode 0)
 (column-number-mode 1)
-(global-display-line-numbers-mode 1)
+(scroll-bar-mode 0)
+;; (global-display-line-numbers-mode 1)
 (global-whitespace-mode 1)
 (global-visual-line-mode 1)
 (global-superword-mode 0)
