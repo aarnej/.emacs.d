@@ -54,7 +54,8 @@
 
 (menu-bar-mode 0)
 (column-number-mode 1)
-(scroll-bar-mode 0)
+(if (fboundp 'scroll-bar-mode)
+    (scroll-bar-mode 0))
 ;; (global-display-line-numbers-mode 1)
 (global-whitespace-mode 1)
 (global-visual-line-mode 1)
@@ -64,7 +65,7 @@
 (winner-mode 1)
 (tool-bar-mode 0)
 (if (and (fboundp 'server-running-p)
-	 (not (server-running-p)))
+     (not (server-running-p)))
     (server-start))
 (electric-indent-mode 0)
 
@@ -73,7 +74,7 @@
 (put 'scroll-left 'disabled nil)
 
 (add-hook 'emacs-lisp-mode-hook
-	      (lambda () (delete 'indentation::space (symbol-value 'whitespace-style))))
+          (lambda () (delete 'indentation::space (symbol-value 'whitespace-style))))
 (add-hook 'find-file-hook 'commit_msg_hook)
 (add-hook 'dired-mode-hook
           (lambda () (define-key dired-mode-map "Q" 'dired-do-query-replace-regexp)))
