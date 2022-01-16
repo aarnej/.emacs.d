@@ -314,7 +314,6 @@
      "\\*Async Shell Command\\*"
      help-mode
      compilation-mode
-     rg-mode
-     magit-status-mode))
+     rg-mode))
   (popper-mode +1)
   (popper-echo-mode +1))                ; For echo area hints
