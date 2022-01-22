@@ -1,16 +1,16 @@
 (use-package idomenu)
 
-(use-package xterm-color
-  :config
-  (setq comint-output-filter-functions
-        (remove 'ansi-color-process-output comint-output-filter-functions))
-  (add-hook 'shell-mode-hook
-            (lambda ()
-              (add-hook
-               'comint-preoutput-filter-functions
-               'xterm-color-filter nil t))))
+;; (use-package xterm-color
+;;   :config
+;;   (setq comint-output-filter-functions
+;;         (remove 'ansi-color-process-output comint-output-filter-functions))
+;;   (add-hook 'shell-mode-hook
+;;             (lambda ()
+;;               (add-hook
+;;                'comint-preoutput-filter-functions
+;;                'xterm-color-filter nil t))))
 
-(use-package spinner)
+;; (use-package spinner)
 
 (use-package pyvenv)
 
@@ -18,8 +18,10 @@
   :custom
   (rg-command-line-flags '("--max-columns" "240" "--max-columns-preview"))
   :config
-  (rg-define-search rg-aarne-dir :files "*" :dir current)
-  (rg-define-search rg-aarne :files "*" :dir project))
+  ;; (rg-enable-menu "\C-cr")
+  (defadvice rg-run (after rg-run-after activate)
+    (rg-save-search))
+)
 
 (use-package wgrep)
 
@@ -38,7 +40,7 @@
   (company-tooltip-align-annotations t)
   (company-idle-delay nil))
 
-(use-package dired-filter)
+;; (use-package dired-filter)
 
 (use-package flycheck
   :custom
@@ -125,9 +127,9 @@
                 (setq indent-tabs-mode nil)
 		(setq fill-paragraph-function 'c-fill-paragraph)))))
 
-(use-package nvm)
+;; (use-package nvm)
 
-(use-package iter2)
+;; (use-package iter2)
 
 ;; (use-package prettier
 ;;   :straight (prettier :type git :host github :repo "jscheid/prettier.el")
@@ -184,7 +186,7 @@
   (add-hook 'python-mode-hook 'ssbb-pyenv-hook)
   (pyvenv-tracking-mode))
 
-(use-package ace-jump-mode)
+;; (use-package ace-jump-mode)
 
 (use-package expand-region)
 
