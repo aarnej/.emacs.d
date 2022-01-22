@@ -30,7 +30,8 @@
  python-fill-docstring-style 'django
  recentf-max-saved-items 1000
  ;; show-paren-style 'mixed
- ; split-height-threshold 0
+ split-height-threshold nil
+ split-width-threshold nil
  tab-width 4
  tar-mode-show-date t
  truncate-partial-width-windows nil
