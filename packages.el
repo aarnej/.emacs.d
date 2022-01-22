@@ -303,17 +303,17 @@
 ;;                    (process-menu-mode :same t)))
 ;;   (shackle-select-reused-windows t))
 
-(use-package popper
-  ;; :bind (("C-`"   . popper-toggle-latest)
-  ;;        ("M-`"   . popper-cycle)
-  ;;        ("C-M-`" . popper-toggle-type))
-  :custom
-  (popper-reference-buffers
-   '("\\*Messages\\*"
-     "Output\\*$"
-     "\\*Async Shell Command\\*"
-     help-mode
-     compilation-mode
-     rg-mode))
-  (popper-mode +1)
-  (popper-echo-mode +1))                ; For echo area hints
+;; (use-package popper
+;;   ;; :bind (("C-`"   . popper-toggle-latest)
+;;   ;;        ("M-`"   . popper-cycle)
+;;   ;;        ("C-M-`" . popper-toggle-type))
+;;   :custom
+;;   (popper-reference-buffers
+;;    '("\\*Messages\\*"
+;;      "Output\\*$"
+;;      "\\*Async Shell Command\\*"
+;;      help-mode
+;;      compilation-mode
+;;      rg-mode))
+;;   (popper-mode +1)
+;;   (popper-echo-mode +1))                ; For echo area hints

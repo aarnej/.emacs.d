@@ -10,7 +10,7 @@
 (define-key aj-mode-map         (kbd "ESC <down>")  'move-text-down)
 ;;                                   "C-c C-  reserved by web-mode
 (define-key aj-mode-map         (kbd "C-c SPC")     'ace-jump-mode)
-(define-key aj-mode-map         (kbd "C-c .")       'popper-toggle-latest)
+;; (define-key aj-mode-map         (kbd "C-c .")       'popper-toggle-latest)
 (define-key aj-mode-map         (kbd "C-c <down>")  'windmove-down)
 (define-key aj-mode-map         (kbd "C-c <left>")  'windmove-left)
 (define-key aj-mode-map         (kbd "C-c <right>") 'windmove-right)
