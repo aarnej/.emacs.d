@@ -40,7 +40,7 @@
   (company-tooltip-align-annotations t)
   (company-idle-delay nil))
 
-;; (use-package dired-filter)
+(use-package dired-filter)
 
 (use-package flycheck
   :custom
