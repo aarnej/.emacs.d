@@ -81,3 +81,5 @@
           (lambda () (define-key dired-mode-map "Q" 'dired-do-query-replace-regexp)))
 (add-hook 'shell-mode-hook (lambda () (display-line-numbers-mode 0)))
 (add-hook 'json-mode-hook #'hs-minor-mode)
+
+(add-hook 'org-mode-hook #'aj/org-mode-hook)

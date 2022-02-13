@@ -76,3 +76,10 @@ If region was active, keep it so that the command can be repeated."
      (list (line-beginning-position) (line-beginning-position 2)))))
 
 ;; (advice-add 'kill-ring-save :before #'slick-copy)
+
+(defun aj/org-mode-hook ()
+  (org-indent-mode 1)
+  (visual-line-mode -1)
+  (local-set-key [remap move-text-up] 'org-metaup)
+  (local-set-key [remap move-text-down] 'org-metadown))
+
