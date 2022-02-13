@@ -41,3 +41,4 @@
   :init-value t)
 
 (aj-mode 1)
+(add-hook 'org-mode-hook (lambda () (aj-mode -1)))
