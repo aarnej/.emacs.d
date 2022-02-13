@@ -43,6 +43,7 @@
 (aj-mode 1)
 
 (defun aj/org-mode-hook ()
+  (visual-line-mode -1)
   (local-set-key [remap move-text-up] 'org-metaup)
   (local-set-key [remap move-text-down] 'org-metadown))
 
