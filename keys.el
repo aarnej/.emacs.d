@@ -41,4 +41,14 @@
   :init-value t)
 
 (aj-mode 1)
-(add-hook 'org-mode-hook (lambda () (aj-mode -1)))
+
+(defun aj/org-mode-hook ()
+  (local-set-key [remap move-text-up] 'org-metaup)
+  (local-set-key [remap move-text-down] 'org-metadown))
+
+(add-hook 'org-mode-hook #'aj/org-mode-hook)
+
+
+
+
+
