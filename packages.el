@@ -257,6 +257,8 @@
   )
 
 (use-package projectile
+  :custom
+  (projectile-switch-project-action #'projectile-vc)
   :config
   (projectile-mode +1)
   (diminish 'projectile-mode))
