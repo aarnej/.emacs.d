@@ -52,10 +52,10 @@
   (global-flycheck-mode)
   (defvar flycheck-python-flake8-executable "/home/aarne/.pyenv/shims/python"))
 
-(use-package rjsx-mode
-  :mode "\\.js\\'")
+;; (use-package rjsx-mode
+;;   :mode "\\.js\\'")
 
-(use-package js2-mode)
+;; (use-package js2-mode)
 
 (use-package dash
   :config
@@ -241,7 +241,7 @@
                               magit-insert-branch-description
                               magit-insert-local-branches
                               magit-insert-remote-branches))
-
+  (magit-diff-extra-stat-arguments '("--stat-width=200"))
   :config
   (transient-append-suffix 'magit-fetch "-p"
     '("-t" "Fetch all tags" "--tags"))
