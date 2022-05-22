@@ -46,8 +46,8 @@
  grep-save-buffers nil
  cursor-type 'box
  blink-cursor-blinks 0
+ blink-cursor-interval 0.3
  w32-use-visible-system-caret nil
- default-frame-alist '((font . "DejaVu Sans Mono-9"))
  scroll-conservatively 10000
  )
 
@@ -83,3 +83,6 @@
 (add-hook 'json-mode-hook #'hs-minor-mode)
 
 (add-hook 'org-mode-hook #'aj/org-mode-hook)
+
+(when (eq system-type 'windows-nt)
+  (set-face-attribute 'default nil :family "Source Code Pro" :height 95 :background "gray14"))
