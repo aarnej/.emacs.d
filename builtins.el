@@ -85,4 +85,4 @@
 (add-hook 'org-mode-hook #'aj/org-mode-hook)
 
 (when (eq system-type 'windows-nt)
-  (set-face-attribute 'default nil :family "Source Code Pro" :height 95 :background "gray14"))
+  (set-face-attribute 'default nil :family "Source Code Pro" :height 90 :background "gray14"))

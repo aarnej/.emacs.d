@@ -3,3 +3,5 @@
 (load-file "~/.emacs.d/defun.el")
 (load-file "~/.emacs.d/packages.el")
 (load-file "~/.emacs.d/keys.el")
+(when (file-exists-p "~/.emacs.d/local.el")
+  (load-file "~/.emacs.d/local.el"))

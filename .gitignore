@@ -17,3 +17,4 @@ url/
 games/
 eln-cache/
 .mc-lists.el
+local.el
