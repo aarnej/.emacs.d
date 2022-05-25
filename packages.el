@@ -50,7 +50,8 @@
   (flycheck-disabled-checkers '(javascript-jshint emacs-lisp-checkdoc))
   :config
   (global-flycheck-mode)
-  (defvar flycheck-python-flake8-executable "/home/aarne/.pyenv/shims/python"))
+  ;; (defvar flycheck-python-flake8-executable "/home/aarne/.pyenv/shims/python")
+)
 
 ;; (use-package rjsx-mode
 ;;   :mode "\\.js\\'")
@@ -68,8 +69,8 @@
 ;;   (lsp-keymap-prefix "C-c l")
 ;;   (lsp-auto-guess-root nil)
 ;;   (lsp-eslint-server-command '("node"
-;; 	                           "/home/aarne/repos/vscode-eslint/server/out/eslintServer.js"
-;; 	                           "--stdio"))
+;;                                 "/home/aarne/repos/vscode-eslint/server/out/eslintServer.js"
+;;                                 "--stdio"))
 ;;   :config
 ;;   (add-hook 'lsp-after-initialize-hook (lambda () (flycheck-add-next-checker 'lsp 'python-flake8)))
 ;;   (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
@@ -125,7 +126,7 @@
                   (c-setup-paragraph-variables))
 
                 (setq indent-tabs-mode nil)
-		(setq fill-paragraph-function 'c-fill-paragraph)))))
+        (setq fill-paragraph-function 'c-fill-paragraph)))))
 
 ;; (use-package nvm)
 
@@ -167,24 +168,24 @@
 
 (use-package json-mode)
 
-(use-package pyenv-mode
-  :straight (pyenv-mode :type git :host github :repo "aarnej/pyenv-mode")
-  :config
-  (defun ssbb-pyenv-hook ()
-    "Automatically activates pyenv version if .python-version file exists."
-    (f-traverse-upwards
-     (lambda (path)
-       (let ((pyenv-version-path (f-expand ".python-version" path)))
-         (when (f-exists? pyenv-version-path)
-           (let ((version (s-trim (f-read-text pyenv-version-path 'utf-8))))
-	     (pyenv-mode t)
-             (pyenv-mode-set version)
-             (setq-local pyvenv-activate (pyenv-mode-full-path version)
-             )
-           ))))))
+;; (use-package pyenv-mode
+;;   :straight (pyenv-mode :type git :host github :repo "aarnej/pyenv-mode")
+;;   :config
+;;   (defun ssbb-pyenv-hook ()
+;;     "Automatically activates pyenv version if .python-version file exists."
+;;     (f-traverse-upwards
+;;      (lambda (path)
+;;        (let ((pyenv-version-path (f-expand ".python-version" path)))
+;;          (when (f-exists? pyenv-version-path)
+;;            (let ((version (s-trim (f-read-text pyenv-version-path 'utf-8))))
+;;           (pyenv-mode t)
+;;              (pyenv-mode-set version)
+;;              (setq-local pyvenv-activate (pyenv-mode-full-path version)
+;;              )
+;;            ))))))
 
-  (add-hook 'python-mode-hook 'ssbb-pyenv-hook)
-  (pyvenv-tracking-mode))
+;;   (add-hook 'python-mode-hook 'ssbb-pyenv-hook)
+;;   (pyvenv-tracking-mode))
 
 ;; (use-package ace-jump-mode)
 
@@ -249,10 +250,10 @@
   (magit-add-section-hook 'magit-status-sections-hook
                           'magit-insert-unpulled-from-pushremote)
   (magit-add-section-hook 'magit-status-sections-hook
-			              'magit-insert-ignored-files
+                          'magit-insert-ignored-files
                           nil t)
   (magit-add-section-hook 'magit-status-sections-hook
-			              'magit-insert-worktrees
+                          'magit-insert-worktrees
                           nil t)
   )
 

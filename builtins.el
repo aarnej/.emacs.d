@@ -49,6 +49,7 @@
  blink-cursor-interval 0.3
  w32-use-visible-system-caret nil
  scroll-conservatively 10000
+ comint-scroll-to-bottom-on-input t
  )
 
 (load-theme 'tango-dark)
