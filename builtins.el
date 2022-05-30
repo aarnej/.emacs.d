@@ -53,6 +53,9 @@
  eshell-scroll-to-bottom-on-input t
  )
 
+(define-key eshell-hist-mode-map (kbd "<up>") nil)
+(define-key eshell-hist-mode-map (kbd "<down>") nil)
+
 (load-theme 'tango-dark)
 
 (menu-bar-mode 0)
@@ -71,6 +74,7 @@
      (not (server-running-p)))
     (server-start))
 (electric-indent-mode 0)
+(savehist-mode 1)
 
 (put 'magit-clean 'disabled nil)
 (put 'narrow-to-region 'disabled nil)

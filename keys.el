@@ -32,6 +32,7 @@
 (define-key aj-mode-map         (kbd "C-x v l")     'magit-log-buffer-file)
 (define-key aj-mode-map         (kbd "C-x v =")     'magit-diff-buffer-file)
 (define-key aj-mode-map         (kbd "M-z")         'zap-up-to-char)
+(define-key aj-mode-map         (kbd "M-o")         'ace-window)
 
 (global-unset-key (kbd "C-x m")) ;; send mail
 (global-unset-key (kbd "C-z")) ;; suspend frame
