@@ -82,7 +82,9 @@
 ;;                    (require 'lsp-python-ms)
 ;;                    (lsp-deferred))))
 
-(use-package restclient)
+(use-package restclient
+  :custom
+  (restclient-same-buffer-response nil))
 
 (use-package web-mode
   :mode (("\\.tsx\\'" . web-mode)
@@ -326,4 +328,12 @@
 ;;   (popper-mode +1)
 ;;   (popper-echo-mode +1))                ; For echo area hints
 
-(use-package ace-window)
+(use-package ace-window
+  :custom
+  (aw-leading-char-style 'path)
+  (aw-display-mode-overlay nil)
+  (aw-background nil)
+  :config
+  (ace-window-display-mode))
+
+(use-package clojure-mode)

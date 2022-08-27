@@ -32,7 +32,7 @@
  ;; show-paren-style 'mixed
  split-height-threshold nil
  split-width-threshold nil
- tab-width 4
+ tab-width 8
  tar-mode-show-date t
  truncate-partial-width-windows nil
  vc-display-status nil
@@ -46,15 +46,18 @@
  grep-save-buffers nil
  cursor-type 'box
  blink-cursor-blinks 0
- blink-cursor-interval 0.3
+ blink-cursor-interval 0.25
+ blink-cursor-delay 0
  w32-use-visible-system-caret nil
  scroll-conservatively 10000
  comint-scroll-to-bottom-on-input t
  eshell-scroll-to-bottom-on-input t
+ enable-local-variables :all
  )
 
-(define-key eshell-hist-mode-map (kbd "<up>") nil)
-(define-key eshell-hist-mode-map (kbd "<down>") nil)
+(add-hook 'eshell-mode-hook (lambda () (
+  (define-key eshell-hist-mode-map (kbd "<up>") nil)
+  (define-key eshell-hist-mode-map (kbd "<down>") nil))))
 
 (load-theme 'tango-dark)
 
@@ -91,4 +94,4 @@
 (add-hook 'org-mode-hook #'aj/org-mode-hook)
 
 (when (eq system-type 'windows-nt)
-  (set-face-attribute 'default nil :family "Source Code Pro" :height 90 :background "gray14"))
+  (set-face-attribute 'default nil :family "Source Code Pro" :height 100 :background "gray14"))
