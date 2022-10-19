@@ -84,7 +84,17 @@
 
 (use-package restclient
   :custom
-  (restclient-same-buffer-response nil))
+  (restclient-same-buffer-response nil)
+  (restclient-response-body-only t)
+  (restclient-content-type-modes '(("text/xml" . xml-mode)
+                                   ("text/plain" . text-mode)
+                                   ("application/xml" . xml-mode)
+                                   ("application/json" . json-mode)
+                                   ("image/png" . image-mode)
+                                   ("image/jpeg" . image-mode)
+                                   ("image/jpg" . image-mode)
+                                   ("image/gif" . image-mode)
+                                   ("text/html" . html-mode))))
 
 (use-package web-mode
   :mode (("\\.tsx\\'" . web-mode)

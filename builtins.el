@@ -53,7 +53,8 @@
  comint-scroll-to-bottom-on-input t
  eshell-scroll-to-bottom-on-input t
  enable-local-variables :all
- )
+ vc-follow-symlinks t
+ auto-insert-query nil)
 
 (add-hook 'eshell-mode-hook (lambda () (
   (define-key eshell-hist-mode-map (kbd "<up>") nil)
@@ -79,6 +80,18 @@
 (electric-indent-mode 0)
 (savehist-mode 1)
 
+(auto-insert-mode 1)
+(setq auto-insert-alist nil)
+(define-auto-insert '(restclient-mode . "REST client skeleton")
+  '(""
+    "# -*- restclient -*-" \n
+    \n
+    "#" \n
+    "GET ")
+)
+
+(add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode))
+
 (put 'magit-clean 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (put 'scroll-left 'disabled nil)
@@ -93,5 +106,4 @@
 
 (add-hook 'org-mode-hook #'aj/org-mode-hook)
 
-(when (eq system-type 'windows-nt)
-  (set-face-attribute 'default nil :family "Source Code Pro" :height 100 :background "gray14"))
+(set-face-attribute 'default nil :family "Source Code Pro" :height 100 :background "gray14")
