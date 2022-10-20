@@ -68,7 +68,7 @@
     (scroll-bar-mode 0))
 ;; (global-display-line-numbers-mode 1)
 (global-whitespace-mode 1)
-(global-visual-line-mode 1)
+(global-visual-line-mode 0)
 (global-superword-mode 0)
 (recentf-mode 1)
 (show-paren-mode 1)
