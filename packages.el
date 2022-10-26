@@ -249,6 +249,7 @@
   (magit-log-section-commit-count 20)
   (magit-log-show-margin nil)
   (magit-reflog-show-margin nil)
+  (magit-delete-by-moving-to-trash nil)
   (magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
   (magit-refs-sections-hook '(magit-insert-error-header
                               magit-insert-branch-description
