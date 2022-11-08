@@ -54,7 +54,8 @@
  eshell-scroll-to-bottom-on-input t
  enable-local-variables :all
  vc-follow-symlinks t
- auto-insert-query nil)
+ auto-insert-query nil
+ confirm-kill-emacs 'yes-or-no-p)
 
 (add-hook 'eshell-mode-hook (lambda () (
   (define-key eshell-hist-mode-map (kbd "<up>") nil)

@@ -36,7 +36,6 @@
 
 (global-unset-key (kbd "C-x m")) ;; send mail
 (global-unset-key (kbd "C-z")) ;; suspend frame
-(global-unset-key (kbd "C-x C-c"))
 
 (define-minor-mode aj-mode
   "A minor mode so that my key settings override annoying major modes."
