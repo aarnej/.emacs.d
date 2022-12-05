@@ -23,7 +23,11 @@
     (rg-save-search))
 )
 
-(use-package wgrep)
+(use-package wgrep
+  :custom
+  (wgrep-auto-save-buffer t)
+  :config
+  (set-face-attribute 'wgrep-face nil :background "gray80"))
 
 (use-package smart-mode-line
   :custom
