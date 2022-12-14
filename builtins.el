@@ -108,3 +108,10 @@
 (add-hook 'org-mode-hook #'aj/org-mode-hook)
 
 (set-face-attribute 'default nil :family "Source Code Pro" :height 100 :background "gray14")
+
+;; Temp fix for getting copypaste to work on WSLg
+(when (and (getenv "WAYLAND_DISPLAY") (not (equal (getenv "GDK_BACKEND") "x11")))
+  (setq
+   interprogram-cut-function
+   (lambda (text)
+     (start-process "wl-copy" nil "wl-copy" "--trim-newline" "--type" "text/plain;charset=utf-8"  text))))
