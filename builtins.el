@@ -109,8 +109,9 @@
 
 (set-face-attribute 'default nil :family "Source Code Pro" :height 100 :background "gray14")
 
-(define-key flymake-mode-map (kbd "M-n") 'flymake-goto-next-error)
-(define-key flymake-mode-map (kbd "M-p") 'flymake-goto-prev-error)
+(with-eval-after-load "flymake"
+  (define-key flymake-mode-map (kbd "M-n") 'flymake-goto-next-error)
+  (define-key flymake-mode-map (kbd "M-p") 'flymake-goto-prev-error))
 
 ;; Temp fix for getting copypaste to work on WSLg
 (when (and (getenv "WAYLAND_DISPLAY") (not (equal (getenv "GDK_BACKEND") "x11")))

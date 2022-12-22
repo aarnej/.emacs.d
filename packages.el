@@ -85,8 +85,10 @@
   (global-tree-sitter-mode)
   ;; you can easily see the difference tree-sitter-hl-mode makes for python, ts or tsx
   ;; by switching on and off
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-  (set-face-attribute 'tree-sitter-hl-face:property nil :slant 'normal))
+  (add-hook 'tree-sitter-after-on-hook
+            (lambda ()
+              (tree-sitter-hl-mode)
+              (set-face-attribute 'tree-sitter-hl-face:property nil :slant 'normal))))
 
 (use-package tree-sitter-langs
   :after tree-sitter)
