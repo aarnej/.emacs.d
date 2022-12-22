@@ -1,19 +1,5 @@
 (use-package idomenu)
 
-;; (use-package xterm-color
-;;   :config
-;;   (setq comint-output-filter-functions
-;;         (remove 'ansi-color-process-output comint-output-filter-functions))
-;;   (add-hook 'shell-mode-hook
-;;             (lambda ()
-;;               (add-hook
-;;                'comint-preoutput-filter-functions
-;;                'xterm-color-filter nil t))))
-
-;; (use-package spinner)
-
-(use-package pyvenv)
-
 (use-package rg
   :custom
   (rg-command-line-flags '("--max-columns" "240" "--max-columns-preview"))
@@ -36,30 +22,7 @@
   :config
   (sml/setup))
 
-;; (use-package company
-;;   :hook ((emacs-lisp-mode . company-mode)
-;;          (python-mode . company-mode))
-;;   :custom
-;;   (company-tooltip-align-annotations t)
-;;   (company-idle-delay 0.2))
-
 (use-package dired-filter)
-
-(use-package flycheck
-  :custom
-  (flycheck-check-syntax-automatically '(save mode-enabled))
-  (flycheck-flake8rc ".flake8")
-  (flycheck-shellcheck-follow-sources nil)
-  (flycheck-disabled-checkers '(javascript-jshint emacs-lisp-checkdoc))
-  :config
-  (global-flycheck-mode)
-  ;; (defvar flycheck-python-flake8-executable "/home/aarne/.pyenv/shims/python")
-)
-
-;; (use-package rjsx-mode
-;;   :mode "\\.js\\'")
-
-;; (use-package js2-mode)
 
 (use-package dash
   :config
@@ -141,27 +104,6 @@
   (python-docstring-install))
 
 (use-package json-mode)
-
-;; (use-package pyenv-mode
-;;   :straight (pyenv-mode :type git :host github :repo "aarnej/pyenv-mode")
-;;   :config
-;;   (defun ssbb-pyenv-hook ()
-;;     "Automatically activates pyenv version if .python-version file exists."
-;;     (f-traverse-upwards
-;;      (lambda (path)
-;;        (let ((pyenv-version-path (f-expand ".python-version" path)))
-;;          (when (f-exists? pyenv-version-path)
-;;            (let ((version (s-trim (f-read-text pyenv-version-path 'utf-8))))
-;;           (pyenv-mode t)
-;;              (pyenv-mode-set version)
-;;              (setq-local pyvenv-activate (pyenv-mode-full-path version)
-;;              )
-;;            ))))))
-
-;;   (add-hook 'python-mode-hook 'ssbb-pyenv-hook)
-;;   (pyvenv-tracking-mode))
-
-;; (use-package ace-jump-mode)
 
 (use-package expand-region)
 
@@ -275,31 +217,6 @@
 (use-package move-text)
 
 (use-package dockerfile-mode)
-
-;; (use-package shackle
-;;   :hook
-;;   (after-init . shackle-mode)
-;;   :custom
-;;   (shackle-inhibit-window-quit-on-same-windows t)
-;;   (shackle-rules '((help-mode :same t)
-;;                    (helpful-mode :same t)
-;;                    (process-menu-mode :same t)))
-;;   (shackle-select-reused-windows t))
-
-;; (use-package popper
-;;   ;; :bind (("C-`"   . popper-toggle-latest)
-;;   ;;        ("M-`"   . popper-cycle)
-;;   ;;        ("C-M-`" . popper-toggle-type))
-;;   :custom
-;;   (popper-reference-buffers
-;;    '("\\*Messages\\*"
-;;      "Output\\*$"
-;;      "\\*Async Shell Command\\*"
-;;      help-mode
-;;      compilation-mode
-;;      rg-mode))
-;;   (popper-mode +1)
-;;   (popper-echo-mode +1))                ; For echo area hints
 
 (use-package ace-window
   :custom
