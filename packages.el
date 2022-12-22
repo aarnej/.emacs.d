@@ -38,8 +38,7 @@
 
 (use-package company
   :hook ((emacs-lisp-mode . company-mode)
-         (python-mode . company-mode)
-         (web-mode . company-mode))
+         (python-mode . company-mode))
   :custom
   (company-tooltip-align-annotations t)
   (company-idle-delay nil))
@@ -66,26 +65,6 @@
   :config
   (with-eval-after-load 'info-look (dash-register-info-lookup)))
 
-;; (use-package lsp-mode
-;;   :after (which-key)
-;;   :hook ((web-mode . lsp))
-;;   :custom
-;;   (lsp-keymap-prefix "C-c l")
-;;   (lsp-auto-guess-root nil)
-;;   (lsp-eslint-server-command '("node"
-;;                                 "/home/aarne/repos/vscode-eslint/server/out/eslintServer.js"
-;;                                 "--stdio"))
-;;   :config
-;;   (add-hook 'lsp-after-initialize-hook (lambda () (flycheck-add-next-checker 'lsp 'python-flake8)))
-;;   (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
-
-;; (use-package lsp-python-ms
-;;   :init (setq lsp-python-ms-auto-install-server t)
-;;   :hook
-;;   (python-mode . (lambda ()
-;;                    (require 'lsp-python-ms)
-;;                    (lsp-deferred))))
-
 (use-package restclient
   :custom
   (restclient-same-buffer-response nil)
@@ -100,62 +79,39 @@
                                    ("image/gif" . image-mode)
                                    ("text/html" . html-mode))))
 
-(use-package web-mode
-  :mode (("\\.tsx\\'" . web-mode)
-         ("\\.ts\\'" . web-mode))
-  :custom
-  ;; aligns annotation to the right hand side
-  (web-mode-code-indent-offset 2)
-  (web-mode-comment-formats '(("javascript" . "//")
-                              ("jsx" . "//")
-                              ("tsx" . "//")
-                              ("typescript" . "//")))
-  (web-mode-css-indent-offset 2)
-  (web-mode-markup-indent-offset 2)
+(use-package tree-sitter
   :config
-  (add-hook 'web-mode-hook
-            (lambda ()
-              (when (member (file-name-extension buffer-file-name) '("tsx" "ts"))
-                ;; To make comment filling work, copied these lines from
-                ;; typescript-mode.el
-                (setq c-comment-prefix-regexp "//+\\|\\**"
-                      c-paragraph-start "$"
-                      c-paragraph-separate "$"
-                      c-block-comment-prefix "* "
-                      c-line-comment-starter "//"
-                      c-comment-start-regexp "/[*/]\\|\\s!"
-                      comment-start-skip "\\(//+\\|/\\*+\\)\\s *")
+  ;; activate tree-sitter on any buffer containing code for which it has a parser available
+  (global-tree-sitter-mode)
+  ;; you can easily see the difference tree-sitter-hl-mode makes for python, ts or tsx
+  ;; by switching on and off
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+  (set-face-attribute 'tree-sitter-hl-face:property nil :slant 'normal))
 
-                (setq-local electric-indent-chars
-                            (append "{}():;," electric-indent-chars))
-                (setq-local electric-layout-rules
-                            '((?\; . after) (?\{ . after) (?\} . before)))
+(use-package tree-sitter-langs
+  :after tree-sitter)
 
-                (let ((c-buffer-is-cc-mode t))
-                  ;; FIXME: These are normally set by `c-basic-common-init'.  Should
-                  ;; we call it instead?  (Bug#6071)
-                  (make-local-variable 'paragraph-start)
-                  (make-local-variable 'paragraph-separate)
-                  (make-local-variable 'paragraph-ignore-fill-prefix)
-                  (make-local-variable 'adaptive-fill-mode)
-                  (make-local-variable 'adaptive-fill-regexp)
-                  (c-setup-paragraph-variables))
+(use-package typescript-mode
+  :after tree-sitter
+  :config
+  ;; we choose this instead of tsx-mode so that eglot can automatically figure out language for server
+  ;; see https://github.com/joaotavora/eglot/issues/624 and https://github.com/joaotavora/eglot#handling-quirky-servers
+  (define-derived-mode typescriptreact-mode typescript-mode
+    "TypeScript TSX")
 
-                (setq indent-tabs-mode nil)
-        (setq fill-paragraph-function 'c-fill-paragraph)))))
+  ;; use our derived mode for tsx files
+  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode))
+  ;; by default, typescript-mode is mapped to the treesitter typescript parser
+  ;; use our derived mode to map both .tsx AND .ts -> typescriptreact-mode -> treesitter tsx
+  (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx)))
 
-;; (use-package nvm)
-
-;; (use-package iter2)
-
-;; (use-package prettier
-;;   :straight (prettier :type git :host github :repo "jscheid/prettier.el")
-;;   :after (web-mode)
-;;   :config
-;;   (defun my-prettier-before-save-hook ()
-;;     (when (member major-mode '(rjsx-mode web-mode typescript-mode))
-;;       (prettier-prettify)))
-;;   (add-hook 'before-save-hook #'my-prettier-before-save-hook))
+(use-package tsi
+  :straight (tsi :type git :host github :repo "orzechowskid/tsi.el")
+  :init
+  (add-hook 'typescript-mode-hook (lambda () (tsi-typescript-mode 1)))
+  (add-hook 'json-mode-hook (lambda () (tsi-json-mode 1)))
+  (add-hook 'css-mode-hook (lambda () (tsi-css-mode 1)))
+  (add-hook 'scss-mode-hook (lambda () (tsi-scss-mode 1))))
 
 (use-package markdown-mode
   :commands (markdown-mode gfm-mode)
