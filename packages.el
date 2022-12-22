@@ -36,12 +36,12 @@
   :config
   (sml/setup))
 
-(use-package company
-  :hook ((emacs-lisp-mode . company-mode)
-         (python-mode . company-mode))
-  :custom
-  (company-tooltip-align-annotations t)
-  (company-idle-delay nil))
+;; (use-package company
+;;   :hook ((emacs-lisp-mode . company-mode)
+;;          (python-mode . company-mode))
+;;   :custom
+;;   (company-tooltip-align-annotations t)
+;;   (company-idle-delay 0.2))
 
 (use-package dired-filter)
 
