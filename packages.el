@@ -176,7 +176,6 @@
 
 (use-package projectile
   :custom
-  (projectile-switch-project-action #'projectile-vc)
   (projectile-indexing-method 'alien)
   :config
   (projectile-mode +1)
