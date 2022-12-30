@@ -226,3 +226,5 @@
   (ace-window-display-mode))
 
 (use-package clojure-mode)
+
+(use-package nvm)
