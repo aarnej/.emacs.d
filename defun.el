@@ -81,5 +81,6 @@ If region was active, keep it so that the command can be repeated."
   (org-indent-mode 1)
   (visual-line-mode -1)
   (local-set-key [remap move-text-up] 'org-metaup)
-  (local-set-key [remap move-text-down] 'org-metadown))
+  (local-set-key [remap move-text-down] 'org-metadown)
+  (set-face-attribute 'org-meta-line nil :height 0.8 :slant 'normal :foreground "#777777"))
 
