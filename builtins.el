@@ -38,7 +38,6 @@
  vc-display-status nil
  enable-recursive-minibuffers t
  minibuffer-depth-indicate-mode t
- tramp-histfile-override "/home/aarne/.tramp_history"
  ;; display-buffer-alist '((".*" . (display-buffer-same-window (inhibit-same-window . nil))))
  winner-dont-bind-my-keys t
  help-window-select t

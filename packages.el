@@ -228,3 +228,5 @@
 (use-package clojure-mode)
 
 (use-package nvm)
+
+(use-package go-mode)
