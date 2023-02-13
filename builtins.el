@@ -112,6 +112,9 @@
   (define-key flymake-mode-map (kbd "M-n") '(lambda () (interactive) (flymake-goto-next-error 1 '(error warning) t)))
   (define-key flymake-mode-map (kbd "M-p") '(lambda () (interactive) (flymake-goto-prev-error 1 '(error warning) t))))
 
+(with-eval-after-load "tramp"
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
+
 ;; Temp fix for getting copypaste to work on WSLg
 (when (and (getenv "WAYLAND_DISPLAY") (not (equal (getenv "GDK_BACKEND") "x11")))
   (setq
