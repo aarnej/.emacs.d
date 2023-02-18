@@ -15,6 +15,7 @@
 (define-key aj-mode-map         (kbd "C-c <left>")  'windmove-left)
 (define-key aj-mode-map         (kbd "C-c <right>") 'windmove-right)
 (define-key aj-mode-map         (kbd "C-c <up>")    'windmove-up)
+(define-key aj-mode-map         (kbd "C-c f")       'flymake-show-project-diagnostics)
 (define-key aj-mode-map         (kbd "C-c x")       'er/expand-region)
 (define-key aj-mode-map         (kbd "C-c i")       'imenu)
 ;; (define-key lsp-mode-map        (kbd "C-c l")       lsp-command-map)

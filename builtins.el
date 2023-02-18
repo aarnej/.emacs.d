@@ -54,7 +54,9 @@
  enable-local-variables :all
  vc-follow-symlinks t
  auto-insert-query nil
- confirm-kill-emacs 'yes-or-no-p)
+ confirm-kill-emacs 'yes-or-no-p
+ native-comp-async-report-warnings-errors 'silent
+)
 
 (add-hook 'eshell-mode-hook (lambda () (
   (define-key eshell-hist-mode-map (kbd "<up>") nil)
@@ -116,11 +118,11 @@
   (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
 
 ;; Temp fix for getting copypaste to work on WSLg
-(when (and (getenv "WAYLAND_DISPLAY") (not (equal (getenv "GDK_BACKEND") "x11")))
-  (setq
-   interprogram-cut-function
-   (lambda (text)
-     (start-process "wl-copy" nil "wl-copy" "--trim-newline" "--type" "text/plain;charset=utf-8"  text))))
+;; (when (and (getenv "WAYLAND_DISPLAY") (not (equal (getenv "GDK_BACKEND") "x11")))
+;;   (setq
+;;    interprogram-cut-function
+;;    (lambda (text)
+;;      (start-process "wl-copy" nil "wl-copy" "--trim-newline" "--type" "text/plain;charset=utf-8"  text))))
 
 (add-to-list 'hs-special-modes-alist
              '(nxml-mode
