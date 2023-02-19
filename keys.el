@@ -1,3 +1,5 @@
+(define-key js-mode-map (kbd "M-.") 'js-find-symbol t)
+
 (define-key input-decode-map "\e[A" [C-up])
 (define-key input-decode-map "\e[B" [C-down])
 (define-key input-decode-map "\e[C" [C-right])
