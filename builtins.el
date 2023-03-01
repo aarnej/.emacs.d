@@ -44,7 +44,7 @@
  sentence-end-double-space nil
  grep-save-buffers nil
  cursor-type 'box
- blink-cursor-blinks 0
+ blink-cursor-blinks 5
  blink-cursor-interval 0.25
  blink-cursor-delay 0
  w32-use-visible-system-caret nil
@@ -108,11 +108,11 @@
 
 (add-hook 'org-mode-hook #'aj/org-mode-hook)
 
-(set-face-attribute 'default nil :family "Source Code Pro" :height 100 :background "gray14")
+(set-face-attribute 'default nil :family "Source Code Pro" :height 90 :background "gray14")
 
 (with-eval-after-load "flymake"
-  (define-key flymake-mode-map (kbd "M-n") '(lambda () (interactive) (flymake-goto-next-error 1 '(error warning) t)))
-  (define-key flymake-mode-map (kbd "M-p") '(lambda () (interactive) (flymake-goto-prev-error 1 '(error warning) t))))
+  (define-key flymake-mode-map (kbd "M-n") '(lambda () (interactive) (flymake-goto-next-error)))
+  (define-key flymake-mode-map (kbd "M-p") '(lambda () (interactive) (flymake-goto-prev-error))))
 
 (with-eval-after-load "tramp"
   (add-to-list 'tramp-remote-path 'tramp-own-remote-path))

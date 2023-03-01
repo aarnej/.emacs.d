@@ -84,3 +84,6 @@ If region was active, keep it so that the command can be repeated."
   (local-set-key [remap move-text-down] 'org-metadown)
   (set-face-attribute 'org-meta-line nil :height 0.8 :slant 'normal :foreground "#777777"))
 
+(defun aj/xml-prettify ()
+  (interactive
+   (shell-command-on-region (point-min) (point-max) "xmllint --format -" (current-buffer))))
